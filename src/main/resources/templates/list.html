@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>買うものリスト</title>
+	<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header>
+    <h1>買うものリスト（モック画面）</h1>
+    <small>※今はただのHTML。あとでSpring Bootとつなぐ。</small>
+</header>
+
+<main>
+
+    <!-- 現在の買い物リスト -->
+    <section class="section" id="current-list">
+        <h2>現在の買い物リスト</h2>
+
+        <table>
+            <thead>
+            <tr>
+                <th>品目名</th>
+                <th>数量</th>
+                <th>単位</th>
+                <th>メモ</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- ダミーデータ -->
+            <tr>
+                <td>卵</td>
+                <td>10</td>
+                <td>個</td>
+                <td>まだ残り少ない気がする</td>
+                <td><button>削除</button></td>
+            </tr>
+            <tr>
+                <td>牛乳</td>
+                <td>2</td>
+                <td>本</td>
+                <td>朝食用</td>
+                <td><button>削除</button></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="actions">
+            <button>まとめて購入処理する</button>
+        </div>
+    </section>
+
+</main>
+
+</body>
+</html>

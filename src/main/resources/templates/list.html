@@ -27,23 +27,16 @@
                 <th>操作</th>
             </tr>
             </thead>
-            <tbody>
-            <!-- ダミーデータ -->
-            <tr>
-                <td>卵</td>
-                <td>10</td>
-                <td>個</td>
-                <td>まだ残り少ない気がする</td>
-                <td><button>削除</button></td>
-            </tr>
-            <tr>
-                <td>牛乳</td>
-                <td>2</td>
-                <td>本</td>
-                <td>朝食用</td>
-                <td><button>削除</button></td>
-            </tr>
-            </tbody>
+			<tbody>
+			<tr th:each="item : ${items}">
+			    <td th:text="${item.name}"></td>
+			    <td th:text="${item.quantity}"></td>
+			    <td th:text="${item.unit}"></td>
+			    <td th:text="${item.memo}"></td>
+			    <td><button>削除</button></td>
+			</tr>
+			</tbody>
+
         </table>
 
         <div class="actions">

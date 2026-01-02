@@ -25,31 +25,21 @@
                 <th>品目名</th>
                 <th>数量</th>
                 <th>単位</th>
+				<th>購入店舗</th>
                 <th>操作</th>
             </tr>
             </thead>
             <tbody>
-            <!-- ダミーデータ -->
-            <tr>
-                <td>2025-11-15</td>
-                <td>卵</td>
-                <td>10</td>
-                <td>個</td>
-                <td><button>再投入</button></td>
-            </tr>
-            <tr>
-                <td>2025-11-10</td>
-                <td>玉ねぎ</td>
-                <td>5</td>
-                <td>個</td>
-                <td><button>再投入</button></td>
-            </tr>
-            <tr>
-                <td>2025-11-03</td>
-                <td>豚ひき肉</td>
-                <td>500</td>
-                <td>g</td>
-                <td><button>再投入</button></td>
+				<tbody>
+				<tr th:each="item : ${items}">
+				    <td th:text="${item.purchaseDate}"></td>
+				    <td th:text="${item.name}"></td>
+				    <td th:text="${item.quantity}"></td>
+				    <td th:text="${item.unit}"></td>
+					<td th:text="${item.shopName}"></td>
+				    <td><button>再投入</button></td>
+				</tr>
+				</tbody>
             </tr>
             </tbody>
         </table>

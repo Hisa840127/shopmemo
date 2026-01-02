@@ -23,6 +23,7 @@
                 <th>品目名</th>
                 <th>数量</th>
                 <th>単位</th>
+				<th>購入店舗</th>
                 <th>メモ</th>
                 <th>操作</th>
             </tr>
@@ -32,6 +33,7 @@
 			    <td th:text="${item.name}"></td>
 			    <td th:text="${item.quantity}"></td>
 			    <td th:text="${item.unit}"></td>
+				<td th:text="${item.shopName}"></td>
 			    <td th:text="${item.memo}"></td>
 			    <td><button>削除</button></td>
 			</tr>

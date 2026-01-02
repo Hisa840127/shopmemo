@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.example.shopmemo.model.HistoryItem;
 import com.example.shopmemo.model.Item;
 
 @Controller
@@ -23,8 +24,8 @@ public class ShopMemoController {
 
         // Mockデータ（DBから来たフリのデータ）
         List<Item> items = List.of(
-            new Item("卵", 10, "個", "残り少ない気がする"),
-            new Item("牛乳", 2, "本", "朝食用")
+            new Item("卵", 10, "個", "ヨークフーズ","残り少ない気がする"),
+            new Item("牛乳", 2, "本", "西友", "朝食用")
         );
 
         // HTML に渡すための詰め込み処理（昔の request.setAttribute に相当）
@@ -37,7 +38,19 @@ public class ShopMemoController {
 
     // 購入履歴画面
     @GetMapping("/history")
-    public String showHistory() {
-        return "history"; // history.html
+    public String showHistory(Model model) {
+    		// Mockデータ（DBから来たフリのデータ）
+        List<HistoryItem> historyItems = List.of(
+            new HistoryItem("2025-11-15", "卵", 10, "個", "ヨークフーズ"),
+            new HistoryItem("2025-11-10", "玉ねぎ", 5, "個", "マルエツ"),
+            new HistoryItem("2025-11-03", "豚ひき肉", 500, "g", "イトーヨーカドー" )
+        );
+        
+        // HTML に渡すための詰め込み処理
+        model.addAttribute("items", historyItems);
+        
+        // history.html を表示
+        return "history";
     }
+
 }

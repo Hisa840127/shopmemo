@@ -1,4 +1,4 @@
-package com.example.shopmemo.model;
+package com.ishii.shopmemo.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -1,4 +1,4 @@
-package com.example.shopmemo.controller;
+package com.ishii.shopmemo.controller;
 
 import java.util.List;
 
@@ -6,11 +6,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.example.shopmemo.model.HistoryItem;
-import com.example.shopmemo.model.Item;
+import com.ishii.shopmemo.model.HistoryItem;
+import com.ishii.shopmemo.model.Item;
+import com.ishii.shopmemo.repository.ItemRepository;
 
 @Controller
 public class ShopMemoController {
+	private final ItemRepository itemRepository;
+
+	public ShopMemoController(ItemRepository itemRepository) {
+	    this.itemRepository = itemRepository;
+	}
+
 
     // トップ画面（メニュー）
     @GetMapping("/")
@@ -22,11 +29,8 @@ public class ShopMemoController {
     @GetMapping("/list")
     public String showList(Model model) {
 
-        // Mockデータ（DBから来たフリのデータ）
-        List<Item> items = List.of(
-            new Item("卵", 10, "個", "ヨークフーズ","残り少ない気がする"),
-            new Item("牛乳", 2, "本", "西友", "朝食用")
-        );
+        // DBから買うものリストを取得
+    		List<Item> items = itemRepository.findAll();
 
         // HTML に渡すための詰め込み処理（昔の request.setAttribute に相当）
         model.addAttribute("items", items);
@@ -47,7 +51,7 @@ public class ShopMemoController {
         );
         
         // HTML に渡すための詰め込み処理
-        model.addAttribute("items", historyItems);
+        model.addAttribute("historyItems", historyItems);
         
         // history.html を表示
         return "history";

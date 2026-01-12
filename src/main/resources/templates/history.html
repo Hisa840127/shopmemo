@@ -30,8 +30,7 @@
             </tr>
             </thead>
             <tbody>
-				<tbody>
-				<tr th:each="item : ${items}">
+				<tr th:each="item : ${historyItems}">
 				    <td th:text="${item.purchaseDate}"></td>
 				    <td th:text="${item.name}"></td>
 				    <td th:text="${item.quantity}"></td>
@@ -39,7 +38,6 @@
 					<td th:text="${item.shopName}"></td>
 				    <td><button>再投入</button></td>
 				</tr>
-				</tbody>
             </tr>
             </tbody>
         </table>

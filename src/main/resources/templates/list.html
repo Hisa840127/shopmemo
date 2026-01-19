@@ -35,7 +35,14 @@
 			    <td th:text="${item.unit}"></td>
 				<td th:text="${item.shopName}"></td>
 			    <td th:text="${item.memo}"></td>
-			    <td><button>削除</button></td>
+				<td>
+					<!-- 購入ボタン押下時に、この行の item.id を hidden で送信する -->
+				    <form th:action="@{/purchase}" method="post">
+				        <input type="hidden" name="id" th:value="${item.id}">
+				        <button type="submit">購入</button>
+				    </form>
+				</td>
+
 			</tr>
 			</tbody>
 
@@ -50,3 +57,10 @@
 
 </body>
 </html>
+
+<!--
+  学習メモ：
+  ・購入ボタンは submit（送信トリガー）
+  ・hidden の id は「どの Item を購入したか」をサーバに伝えるため
+  ・hidden は画面には出ないが、POST時に一緒に送信される
+-->

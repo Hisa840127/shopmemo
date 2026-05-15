@@ -108,9 +108,9 @@ public class ShopMemoController {
 	 * ・Item の id と HistoryItem の id は別物
 	 *   → それぞれのテーブル内での識別子
 	 *   
-	 *  3) について
-	 *  ここで引数として渡されたidはItemのidなので、それを使って
-	 *  DBのITEMテーブルから、該当のカラムを削除している   
+	 * 3) について
+	 * ここで引数として渡されたidはItemのidなので、それを使って
+	 * DBのITEMテーブルから、該当する行（レコード）を削除している   
 	 */
 
 	// 購入履歴画面

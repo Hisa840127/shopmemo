@@ -1,49 +1,159 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
-    <meta charset="UTF-8">
-    <title>購入履歴</title>
+	<meta charset="UTF-8">
+	<title>購入履歴</title>
 	<link rel="stylesheet" href="/css/style.css">
 </head>
+
 <body>
-<header>
-    <h1>購入履歴（モック画面）</h1>
-    <small>※今はただのHTML。あとでSpring Bootとつなぐ。</small>
-</header>
+	<header>
+		<h1>購入履歴</h1>
+	</header>
 
-<main>
+	<main>
 
-    <!-- 購入履歴リスト -->
-    <section class="section" id="history">
-        <h2>購入履歴</h2>
-        <small>直近50件くらいを想定</small>
+		<!-- 購入履歴リスト -->
+		<section class="section" id="history">
+			<h2>購入履歴</h2>
+			<small>直近50件くらいを想定</small>
 
-        <table>
-            <thead>
-            <tr>
-                <th>購入日</th>
-                <th>品目名</th>
-                <th>数量</th>
-                <th>単位</th>
-				<th>購入店舗</th>
-                <th>操作</th>
-            </tr>
-            </thead>
-            <tbody>
-				<tr th:each="item : ${historyItems}">
-				    <td th:text="${item.purchaseDate}"></td>
-				    <td th:text="${item.name}"></td>
-				    <td th:text="${item.quantity}"></td>
-				    <td th:text="${item.unit}"></td>
-					<td th:text="${item.shopName}"></td>
-				    <td><button>再投入</button></td>
-				</tr>
-            </tr>
-            </tbody>
-        </table>
-    </section>
+			<table>
+				<thead>
+					<tr>
+						<th>購入日</th>
+						<th>品目名</th>
+						<th>数量</th>
+						<th>単位</th>
+						<th>購入店舗</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="item : ${historyItems}">
+						<td th:text="${item.purchaseDate}"></td>
+						<td th:text="${item.name}"></td>
+						<td th:text="${item.quantity}"></td>
+						<td th:text="${item.unit}"></td>
+						<td th:text="${item.shopName}"></td>
+						<td>
+							<form th:action="@{/readd}" method="post">
+								<input type="hidden" name="id" th:value="${item.id}">
+								<button type="submit">再投入</button>
+							</form>
+							<!--
+							<補足?>
 
-</main>
+							form
+							↓
+							入力データを送信するためのHTMLタグ。
+
+							今回の再投入ボタンでは、
+
+							再投入ボタン押下
+							↓
+							/readd へ送信
+							↓
+							Controllerの readd() 実行
+
+							という流れになる。
+
+
+							th:action
+
+							↓
+
+							Thymeleaf用の属性。
+
+							@{/readd}
+
+							は、
+
+							「/readd へ送信する」
+
+							という意味。
+
+							対応するControllerは、
+
+							@PostMapping("/readd")
+
+
+							method="post"
+
+							↓
+
+							POST方式でデータ送信する設定。
+
+							今回は再投入処理の実行に使用している。
+
+
+							<input type="hidden">
+
+							↓
+
+							画面には表示しない入力項目。
+
+							今回は、
+
+							name="id"
+
+							でHistoryItemのIDを保持している。
+
+
+							th:value="${item.id}"
+
+							↓
+
+							Thymeleafが item.id の値を埋め込む。
+
+							例：
+
+							item.id = 5
+
+							↓
+
+							<input value="5">
+
+							になる。
+
+
+							<button type="submit">
+
+							↓
+
+							フォーム送信ボタン。
+
+							押すと form の内容が
+							Controllerへ送信される。
+
+
+							覚えておけば十分なこと：
+
+							・th は Thymeleaf の th
+
+							・@{/readd} は /readd へ送信
+
+							・再投入ボタンを押すと
+							  Controllerの readd() が呼ばれる
+
+							・hidden は画面に見えないデータ
+
+							・id を使って
+							  対象の購入履歴を取得している
+							-->
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<nav class="actions">
+				<a href="/">トップへ戻る</a>
+				<a href="/list">買う物リストを見る</a>
+			</nav>
+		</section>
+
+	</main>
 
 </body>
+
 </html>

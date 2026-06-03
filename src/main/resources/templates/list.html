@@ -1,68 +1,169 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
-    <meta charset="UTF-8">
-    <title>買うものリスト</title>
+	<meta charset="UTF-8">
+	<title>買う物リスト</title>
 	<link rel="stylesheet" href="/css/style.css">
 </head>
+
 <body>
-<header>
-    <h1>買うものリスト（モック画面）</h1>
-    <small>※今はただのHTML。あとでSpring Bootとつなぐ。</small>
-</header>
+	<header>
+		<h1>買う物リスト</h1>
+	</header>
 
-<main>
+	<main>
 
-    <!-- 現在の買い物リスト -->
-    <section class="section" id="current-list">
-        <h2>現在の買い物リスト</h2>
+		<!-- 現在の買う物リスト -->
+		<section class="section" id="current-list">
+			<h2>現在の買う物リスト</h2>
 
-        <table>
-            <thead>
-            <tr>
-                <th>品目名</th>
-                <th>数量</th>
-                <th>単位</th>
-				<th>購入店舗</th>
-                <th>メモ</th>
-                <th>操作</th>
-            </tr>
-            </thead>
-			<tbody>
-			<tr th:each="item : ${items}">
-			    <td th:text="${item.name}"></td>
-			    <td th:text="${item.quantity}"></td>
-			    <td th:text="${item.unit}"></td>
-				<td th:text="${item.shopName}"></td>
-			    <td th:text="${item.memo}"></td>
-				<td>
-				    <form th:action="@{/purchase}" method="post">
-				        <input type="hidden" name="id" th:value="${item.id}">
-				        <button type="submit">購入</button>
-				    </form>
-				</td>
+			<table>
+				<thead>
+					<tr>
+						<th>品目名</th>
+						<th>数量</th>
+						<th>単位</th>
+						<th>購入店舗</th>
+						<th>メモ</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="item : ${items}">
+						<td th:text="${item.name}"></td>
+						<td th:text="${item.quantity}"></td>
+						<td th:text="${item.unit}"></td>
+						<td th:text="${item.shopName}"></td>
+						<td th:text="${item.memo}"></td>
+						<td>
+							<form th:action="@{/purchase}" method="post">
+								<input type="hidden" name="id" th:value="${item.id}">
+								<button type="submit">購入</button>
+							</form>
+							<!--
+							<補足?>
 
-			</tr>
-			</tbody>
+							form
+							↓
+							入力データを送信するためのHTMLタグ。
 
-        </table>
+							今回の購入ボタンでは、
 
-        <div class="actions">
-            <button>まとめて購入処理する</button>
-        </div>
-		<nav class="actions">
+							購入ボタン押下
+							↓
+							/purchase へ送信
+							↓
+							Controllerの purchase() 実行
 
-		    <a href="/">トップへ戻る</a>
+							という流れになる。
 
-		    <a href="/history">購入履歴を見る</a>
-			
 
-		</nav>
-    </section>
+							th:action
 
-</main>
+							↓
+
+							Thymeleaf用の属性。
+
+							@{/purchase}
+
+							は、
+
+							「/purchase へ送信する」
+
+							という意味。
+
+							対応するControllerは、
+
+							@PostMapping("/purchase")
+
+
+							method="post"
+
+							↓
+
+							POST方式でデータ送信する設定。
+
+							今回は購入処理の実行に使用している。
+
+
+							<input type="hidden">
+
+							↓
+
+							画面には表示しない入力項目。
+
+							今回は、
+
+							name="id"
+
+							でItemのIDを保持している。
+
+
+							th:value="${item.id}"
+
+							↓
+
+							Thymeleafが item.id の値を埋め込む。
+
+							例：
+
+							item.id = 3
+
+							↓
+
+							<input value="3">
+
+							になる。
+
+
+							<button type="submit">
+
+							↓
+
+							フォーム送信ボタン。
+
+							押すと form の内容が
+							Controllerへ送信される。
+
+
+							覚えておけば十分なこと：
+
+							・th は Thymeleaf の th
+
+							・@{/purchase} は /purchase へ送信
+
+							・購入ボタンを押すと
+							  Controllerの purchase() が呼ばれる
+
+							・hidden は画面に見えないデータ
+							-->
+						</td>
+
+					</tr>
+				</tbody>
+
+			</table>
+
+			<div class="actions">
+				<button>まとめて購入処理する</button>
+			</div>
+			<form class="actions" action="/items" method="post">
+			    <input type="text" name="name" placeholder="品目名">
+			    <input type="number" name="quantity" placeholder="数量">
+			    <input type="text" name="unit" placeholder="単位">
+			    <input type="text" name="shopName" placeholder="購入店舗">
+			    <input type="text" name="memo" placeholder="メモ">
+			    <button type="submit">追加</button>
+			</form>
+			<nav class="actions">
+				<a href="/">トップへ戻る</a>
+				<a href="/history">購入履歴を見る</a>
+			</nav>
+		</section>
+
+	</main>
 
 </body>
+
 </html>
-
-

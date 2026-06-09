@@ -99,35 +99,26 @@ public class ShopMemoController {
 		return "history";
 	}
 	
-	// 購入履歴から買うものリストへ再投入
-	@PostMapping("/readd")
-	public String readd(@RequestParam Long id) {
+	// 再投入編集画面を表示
+	@GetMapping("/readd/edit")
+	public String showReaddEdit(@RequestParam Long id, Model model) {
+	    Optional<HistoryItem> opt = historyItemRepository.findById(id);
+	    if (opt.isEmpty()) {
+	        return "redirect:/history";
+	    }
 
-		Optional<HistoryItem> opt = historyItemRepository.findById(id);
-		if (opt.isEmpty()) {
-			return "redirect:/history";
-		}
-
-		HistoryItem history = opt.get();
-
-		Item item = new Item(
-				history.getName(),
-				history.getQuantity(),
-				history.getUnit(),
-				history.getShopName(),
-				"");
-
-		itemRepository.save(item);
-
-		return "redirect:/list";
+	    model.addAttribute("historyItem", opt.get());
+	    return "readd-edit";
 	}
 	/*
 	 * <重要>
 	 *
 	 * 【このメソッドは何をしている？】
 	 *
-	 * 購入履歴(HistoryItem)から、
-	 * 買うものリスト(Item)へ再投入する処理。
+	 * 再投入編集画面(readd-edit.html)を表示する処理。
+	 *
+	 * 購入履歴(HistoryItem)を取得し、
+	 * 画面へ渡している。
 	 *
 	 *
 	 * 【最低限どこを見る？】
@@ -139,19 +130,18 @@ public class ShopMemoController {
 	 * 購入履歴を取得
 	 *
 	 *
-	 * new Item(...)
+	 * model.addAttribute(...)
 	 *
 	 * ↓
 	 *
-	 * HistoryItemの内容から
-	 * Itemを作成
+	 * HTMLへデータを渡す
 	 *
 	 *
-	 * itemRepository.save(item)
+	 * return "readd-edit"
 	 *
 	 * ↓
 	 *
-	 * 買うものリストへ保存
+	 * readd-edit.html を表示
 	 *
 	 *
 	 * 【ざっくり流れ】
@@ -162,85 +152,347 @@ public class ShopMemoController {
 	 * ↓
 	 * HistoryItem取得
 	 * ↓
-	 * Item作成
+	 * Modelへ格納
 	 * ↓
-	 * Item保存
-	 * ↓
-	 * 買うものリスト画面へ移動
+	 * readd-edit.html表示
 	 *
 	 *
 	 * 【覚えておけば十分なこと】
 	 *
-	 * ・HistoryItem → Item の変換処理
+	 * ・再投入編集画面を表示する処理
 	 *
-	 * ・履歴から買うものリストへ戻す機能
+	 * ・HistoryItemを取得して画面へ渡している
 	 *
-	 * ・findById()で履歴取得
+	 * ・ModelはHTMLへデータを渡す箱
 	 *
-	 * ・save()で買うものリストへ保存
+	 * ・return "readd-edit" で
+	 *   readd-edit.html を表示する
 	 *
 	 * ・細かい補足を忘れても、
-	 *   「履歴から再投入する処理」
+	 *   「編集画面を開く処理」
 	 *   と分かればOK
 	 */
 	/*
 	 * <補足1>
-	 * Optional は
-	 * 「中身があるかもしれないし、
-	 * 無いかもしれない箱」。
+	 * Model は、
+	 * ControllerからHTMLへ
+	 * データを渡すための箱。
 	 *
-	 * findById() は、
-	 * データが見つからない可能性があるため、
+	 * 今回の処理では、
 	 *
-	 * Optional<HistoryItem>
+	 * history.html
+	 * ↓
+	 * idだけ送信
 	 *
-	 * を返す。
+	 * Controller
+	 * ↓
+	 * findById(id)
+	 *
+	 * ↓
+	 * HistoryItem取得
+	 *
+	 * ↓
+	 * Modelへ格納
+	 *
+	 * ↓
+	 * readd-edit.html表示
+	 *
+	 * という流れになっている。
 	 *
 	 *
 	 * 例：
 	 *
-	 * Optional<HistoryItem> opt
+	 * model.addAttribute(
+	 *         "historyItem",
+	 *         opt.get());
 	 *
 	 * ↓
 	 *
-	 * 中身あり
-	 * └─ HistoryItem
+	 * Model箱
+	 * └─ historyItem
+	 *     └─ HistoryItem
 	 *
-	 * または
 	 *
-	 * 中身なし
-	 * └─ 空
+	 * その後、
+	 *
+	 * return "readd-edit";
+	 *
+	 * によって、
+	 * readd-edit.html が表示される。
+	 *
+	 *
+	 * HTML側では、
+	 *
+	 * ${historyItem.name}
+	 *
+	 * ${historyItem.quantity}
+	 *
+	 * のように参照できる。
+	 *
+	 *
+	 * ポイント：
+	 *
+	 * history.html から送られてくるのは
+	 * idだけ。
+	 *
+	 * Modelはブラウザから送られてくるものではなく、
+	 * Springが用意してくれる箱。
+	 *
+	 * ControllerがDBから取得したデータを、
+	 * HTMLへ渡すために使用する。
+	 * 
+	 * opt.get()は戻り値がHistoryItemクラスのインスタンス。
+	 * optにはhistoryItemRepository.findById(id)が代入されているため。
+	 */
+	/*
+	 * <補足2>
+	 * addAttribute() の第1引数は、
+	 * HTML側で使用する変数名。
+	 *
+	 * 例：
+	 *
+	 * model.addAttribute(
+	 *         "historyItem",
+	 *         opt.get());
+	 *
+	 * ↓
+	 *
+	 * HTML側では、
+	 *
+	 * ${historyItem}
+	 *
+	 * という名前で参照できるようになる。
+	 *
+	 *
+	 * 今回の場合、
+	 *
+	 * opt.get()
+	 *
+	 * ↓
+	 *
+	 * HistoryItemインスタンス
+	 *
+	 * が格納されている。
 	 *
 	 *
 	 * そのため、
 	 *
-	 * if (opt.isEmpty())
+	 * ${historyItem.name}
 	 *
-	 * で空チェックを行う。
+	 * ${historyItem.quantity}
 	 *
+	 * ${historyItem.unit}
 	 *
-	 * 空でなければ、
-	 *
-	 * HistoryItem history = opt.get();
-	 *
-	 * で中身を取り出せる。
+	 * のように書ける。
 	 *
 	 *
 	 * イメージ：
 	 *
-	 * opt
+	 * model.addAttribute(
+	 *         "historyItem",
+	 *         opt.get());
+	 *
 	 * ↓
-	 * Optionalの箱
 	 *
-	 * opt.get()
+	 * Model箱
+	 * └─ historyItem
+	 *     └─ HistoryItem
+	 *
+	 *
+	 * HTML
+	 *
+	 * ${historyItem.name}
+	 *
 	 * ↓
-	 * 箱から中身を取り出す
+	 *
+	 * HistoryItemのname取得
 	 *
 	 *
-	 * 空の状態で get() を呼ぶと
-	 * NoSuchElementException が発生するため、
-	 * 通常は isEmpty() や isPresent() とセットで使用する。
+	 * ${historyItem.quantity}
+	 *
+	 * ↓
+	 *
+	 * HistoryItemのquantity取得
+	 *
+	 *
+	 * Thymeleafが裏側で
+	 * getter(getName(), getQuantity() など)
+	 * を呼び出している。
+	 *
+	 *
+	 * ポイント：
+	 *
+	 * addAttribute() の第1引数
+	 * ↓
+	 * HTML側の変数名
+	 *
+	 * addAttribute() の第2引数
+	 * ↓
+	 * 実際に渡すデータ
 	 */
+	
+	// 再投入編集画面から買うものリストへ追加
+	@PostMapping("/readd")
+	public String readd(
+	        @RequestParam String name,
+	        @RequestParam int quantity,
+	        @RequestParam String unit,
+	        @RequestParam String shopName,
+	        @RequestParam String memo) {
+
+	    Item item = new Item(name, quantity, unit, shopName, memo);
+	    itemRepository.save(item);
+
+	    return "redirect:/list";
+	}
+	/*
+	 * <重要>
+	 *
+	 * 【このメソッドは何をしている？】
+	 *
+	 * 再投入編集画面(readd-edit.html)から送信された内容を受け取り、
+	 * 買うものリスト(Item)へ追加する処理。
+	 *
+	 *
+	 * 【最低限どこを見る？】
+	 *
+	 * @RequestParam
+	 *
+	 * ↓
+	 *
+	 * HTMLから送られた値を受け取る
+	 *
+	 *
+	 * new Item(...)
+	 *
+	 * ↓
+	 *
+	 * Itemインスタンス作成
+	 *
+	 *
+	 * itemRepository.save(item)
+	 *
+	 * ↓
+	 *
+	 * DBへ保存
+	 *
+	 *
+	 * return "redirect:/list"
+	 *
+	 * ↓
+	 *
+	 * 買うものリスト画面へ戻る
+	 *
+	 *
+	 * 【ざっくり流れ】
+	 *
+	 * 再投入画面で入力
+	 * ↓
+	 * submit
+	 * ↓
+	 * @RequestParamで値受取
+	 * ↓
+	 * Item作成
+	 * ↓
+	 * saveでDB保存
+	 * ↓
+	 * /listへリダイレクト
+	 *
+	 *
+	 * 【覚えておけば十分なこと】
+	 *
+	 * ・再投入内容をItemとして保存する処理
+	 *
+	 * ・@RequestParamは
+	 *   HTMLから送られた値を受け取る
+	 *
+	 * ・new Item(...)で
+	 *   Itemインスタンスを作成する
+	 *
+	 * ・save(...)でDBへ保存する
+	 *
+	 * ・return "redirect:/list" で
+	 *   一覧画面へ戻る
+	 *
+	 * ・細かい補足を忘れても、
+	 *   「入力内容をDBへ保存する処理」
+	 *   と分かればOK
+	 */
+	/*
+	 * <補足1>
+	 *
+	 * @RequestParam について。
+	 *
+	 * HTMLのformから送られた値を
+	 * Javaの引数として受け取る。
+	 *
+	 *
+	 * 例：
+	 *
+	 * HTML
+	 *
+	 * <input name="name">
+	 *
+	 * ↓
+	 *
+	 * Java
+	 *
+	 * @RequestParam String name
+	 *
+	 *
+	 * 対応関係：
+	 *
+	 * HTML
+	 * name="name"
+	 *
+	 * ↓
+	 *
+	 * Java
+	 * @RequestParam String name
+	 *
+	 *
+	 * HTML側の name と
+	 * Java側の引数名が対応している。
+	 */
+	/*
+	 * <補足2>
+	 *
+	 * submitからsaveまでの流れ。
+	 *
+	 * HTML入力
+	 * ↓
+	 * submit
+	 * ↓
+	 * form送信
+	 * ↓
+	 * @RequestParam
+	 * ↓
+	 * Javaで受取
+	 * ↓
+	 * new Item(...)
+	 * ↓
+	 * Item作成
+	 * ↓
+	 * save(...)
+	 * ↓
+	 * DB保存
+	 *
+	 *
+	 * イメージ：
+	 *
+	 * HTML
+	 * ↓
+	 * form
+	 * ↓
+	 * submit
+	 * ↓
+	 * Java
+	 * ↓
+	 * Item
+	 * ↓
+	 * DB
+	 */
+
 }
 /*
  * <重要>

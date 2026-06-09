@@ -148,6 +148,8 @@
 			<div class="actions">
 				<button>まとめて購入処理する</button>
 			</div>
+			
+			<!-- 新規追加フォーム -->
 			<form class="actions" action="/items" method="post">
 			    <input type="text" name="name" placeholder="品目名">
 			    <input type="number" name="quantity" placeholder="数量">
@@ -156,6 +158,171 @@
 			    <input type="text" name="memo" placeholder="メモ">
 			    <button type="submit">追加</button>
 			</form>
+			<!--
+			<重要>
+
+			【この部分は何をしている？】
+
+			買うものリストへ
+			新しいItemを追加する入力フォーム。
+
+			ユーザーが入力した内容を
+			Controllerへ送信している。
+
+
+			【最低限どこを見る？】
+
+			action="/items"
+
+			↓
+
+			/itemsへ送信
+
+
+			method="post"
+
+			↓
+
+			POSTで送信
+
+
+			name="name"
+
+			↓
+
+			品目名
+
+
+			name="quantity"
+
+			↓
+
+			数量
+
+
+			<button type="submit">
+
+			↓
+
+			追加ボタン
+
+
+			【ざっくり流れ】
+
+			入力
+			↓
+
+			追加ボタン押下
+
+			↓
+
+			/itemsへPOST
+
+			↓
+
+			Controllerの addItem()
+
+			↓
+
+			Item作成
+
+			↓
+
+			DB保存
+
+			↓
+
+			買うものリスト再表示
+
+
+			【覚えておけば十分なこと】
+
+			・新規追加用フォーム
+
+			・入力内容を /items へ送信
+
+			・Controllerの addItem() が呼ばれる
+
+			・細かい補足を忘れても、
+			  「Itemを追加するフォーム」
+			  と分かればOK
+			-->
+			<!--
+			<補足1>
+
+			input の name は、
+			Controller側の
+			@RequestParam と対応している。
+
+			例：
+
+			<input name="name">
+
+			↓
+
+			@RequestParam String name
+
+
+			<input name="quantity">
+
+			↓
+
+			@RequestParam int quantity
+
+
+			送信時に、
+			同じ名前同士で値が渡される。
+			-->
+			
+			<!--
+			<補足2>
+
+			このフォームには、
+
+			th:value
+
+			が付いていない。
+
+			そのため、
+			入力欄は空の状態で表示される。
+
+
+			例：
+
+			<input
+			    type="text"
+			    name="name"
+			    placeholder="品目名">
+
+			↓
+
+			空欄表示
+
+
+			一方で、
+
+			th:value="${historyItem.name}"
+
+			が付いている場合は、
+
+			Controllerから渡された値が
+			初期値として表示される。
+
+
+			イメージ：
+
+			新規追加フォーム
+			↓
+
+			空欄から入力
+
+
+			再投入編集フォーム
+			↓
+
+			最初から値が入っている
+			-->
+			
 			<nav class="actions">
 				<a href="/">トップへ戻る</a>
 				<a href="/history">購入履歴を見る</a>

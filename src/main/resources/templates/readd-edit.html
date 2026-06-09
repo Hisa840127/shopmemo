@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>再投入用編集画面</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <header>
+        <h1>再投入編集</h1>
+    </header>
+
+    <main>
+        <section class="section">
+            <h2>買うものリストへ再投入</h2>
+			
+			<!--再投入編集フォーム-->
+            <form class="actions" th:action="@{/readd}" method="post">
+                <input type="text" name="name" th:value="${historyItem.name}" placeholder="品目名">
+                <input type="number" name="quantity" th:value="${historyItem.quantity}" placeholder="数量">
+                <input type="text" name="unit" th:value="${historyItem.unit}" placeholder="単位">
+                <input type="text" name="shopName" th:value="${historyItem.shopName}" placeholder="購入店舗">
+                <input type="text" name="memo" placeholder="メモ">
+                <button type="submit">買うものリストへ追加</button>
+            </form>
+			<!--
+			<重要>
+
+			【この部分は何をしている？】
+
+			再投入編集画面の入力欄。
+
+			Controllerから渡された
+			HistoryItemの内容を初期値として表示している。
+
+
+			【最低限どこを見る？】
+			
+
+
+			th:value="${historyItem.name}"
+
+			↓
+
+			品目名の初期値
+
+
+			th:value="${historyItem.quantity}"
+
+			↓
+
+			数量の初期値
+
+
+			th:value="${historyItem.unit}"
+
+			↓
+
+			単位の初期値
+
+
+			th:value="${historyItem.shopName}"
+
+			↓
+
+			購入店舗の初期値
+
+
+			【ざっくり流れ】
+
+			showReaddEdit()
+			↓
+			HistoryItem取得
+			↓
+			Modelへ格納
+			↓
+			readd-edit.html表示
+			↓
+			th:value が値を埋め込む
+
+
+			【覚えておけば十分なこと】
+
+			・再投入時の入力欄
+
+			・th:value が初期値を表示している
+
+			・Controllerから渡された
+			  HistoryItemを利用している
+
+			・細かい補足を忘れても、
+			  「履歴の内容を最初から表示する仕組み」
+			  と分かればOK
+			-->
+			<!--
+			<補足1>
+			
+			初期値がない場合についてはlist.htmlの新規追加フォーム参照
+
+			th:value は、
+			Thymeleafで入力欄の値(value)を設定するための属性。
+
+			例：
+
+			th:value="${historyItem.name}"
+
+			↓
+
+			historyItem.name の値を取得
+
+			↓
+
+			入力欄へ設定
+
+
+			例：
+
+			historyItem.name = "卵"
+
+			↓
+
+			<input value="卵">
+
+			になる。
+
+
+			そのため、
+			再投入編集画面では
+			最初から値が入力された状態で表示される。
+			-->
+
+            <nav class="actions">
+                <a href="/history">購入履歴へ戻る</a>
+                <a href="/list">買う物リストを見る</a>
+            </nav>
+        </section>
+    </main>
+</body>
+
+</html>

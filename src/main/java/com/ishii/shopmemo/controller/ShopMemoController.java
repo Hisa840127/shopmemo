@@ -76,6 +76,15 @@ public class ShopMemoController {
 		return "redirect:/list";
 	}
 	
+	// 削除ボタン
+	@PostMapping("/delete")
+	public String deleteItem(@RequestParam Long id) {
+
+	    itemRepository.deleteById(id);
+
+	    return "redirect:/list";
+	}
+	
 	// 新規追加
 	@PostMapping("/items")
 	public String addItem(

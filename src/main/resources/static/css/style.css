@@ -5,17 +5,18 @@ body {
     line-height: 1.6;
 	background-color: #121212;
 	   color: rgb(255, 255, 255);
-	   font-size: 20px;
+	   font-size: 40px;
 }
+
 header {
     margin-bottom: 24px;
 }
 h1 {
-    font-size: 1.4rem;
+    font-size: 2.5rem;
     margin-bottom: 4px;
 }
 h2 {
-    font-size: 1.2rem;
+    font-size: 2.5rem;
     margin-top: 24px;
     margin-bottom: 8px;
 }
@@ -29,8 +30,8 @@ table {
 }
 th, td {
     border: 1px solid #777;
-    padding: 8px 10px;
-    font-size: 0.9rem;
+    padding: 4px 6px;
+    font-size: 2.5rem;
 	background-color: #2a2a2a;
     color: #ffffff;
 }
@@ -473,12 +474,12 @@ th {
     flex-wrap: wrap;
 }
 input {
-    font-size: 18px;
-    padding: 8px;
+    font-size: 40px;
+    padding: 4px;
 }
 button {
-    font-size: 18px;
-    padding: 10px 16px;
+    font-size: 40px;
+    padding: 4px 6px;
     cursor: pointer;
 }
 
@@ -490,3 +491,114 @@ a,
 a:visited {
     color: #66b3ff;
 }
+/*
+ * <補足>
+ *
+ * CSS調整時の確認手順
+ *
+ * ① localhostで確認
+ *
+ * ↓
+ *
+ * CSSを変更したら、
+ * localhost:8080 を更新(F5)して確認する。
+ *
+ *
+ * ② ChromeのiPhoneモードで確認
+ *
+ * ↓
+ *
+ * F12
+ *
+ * ↓
+ *
+ * デバイスツールバー
+ *
+ * ↓
+ *
+ * iPhoneを選択
+ *
+ * ↓
+ *
+ * スマホ表示を確認する。
+ *
+ *
+ * ③ 調整完了後にpush
+ *
+ * ↓
+ *
+ * CSS変更のたびにpushする必要はない。
+ *
+ * localhostで調整を完了させてから
+ * commit・pushする。
+ *
+ *
+ * ④ Renderで最終確認
+ *
+ * ↓
+ *
+ * GitHubへpush後、
+ * Renderの自動デプロイ完了を待つ。
+ *
+ * 公開環境で問題ないか確認する。
+ *
+ *
+ * ⑤ 実機で確認
+ *
+ * ↓
+ *
+ * 最後にスマホ実機で確認する。
+ *
+ * localhostやChromeのiPhoneモードで
+ * 問題なく見えても、
+ * 実際の使用感は異なる場合がある。
+ *
+ *
+ * ポイント：
+ *
+ * CSS調整時は、
+ *
+ * CSS変更
+ * ↓
+ * localhostで確認
+ * ↓
+ * ChromeのiPhoneモードで確認
+ * ↓
+ * push
+ * ↓
+ * Render確認
+ * ↓
+ * 実機確認
+ *
+ * の順で進めると効率が良い。
+ */
+ .modal {
+     position: fixed;
+     inset: 0;
+     background-color: rgba(0, 0, 0, 0.6);
+
+     display: flex;
+     justify-content: center;
+     align-items: center;
+ }
+
+ .hidden {
+     display: none;
+ }
+
+ .modal-content {
+     background-color: #222;
+     color: white;
+     padding: 20px;
+     border: 1px solid #777;
+     border-radius: 12px;
+     width: 80%;
+     max-width: 320px;
+ }
+ td form {
+     margin: 2px 0;
+ }
+
+ .delete-button {
+     background-color: #444;
+ }

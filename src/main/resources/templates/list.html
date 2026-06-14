@@ -35,109 +35,24 @@
 						<td th:text="${item.quantity}"></td>
 						<td th:text="${item.unit}"></td>
 						<td th:text="${item.shopName}"></td>
-						<td th:text="${item.memo}"></td>
 						<td>
-							<form th:action="@{/purchase}" method="post">
-								<input type="hidden" name="id" th:value="${item.id}">
-								<button type="submit">購入</button>
-							</form>
-							<!--
-							<補足?>
+						    <button type="button"
+						            class="memo-button"
+						            th:if="${item.memo != null and !item.memo.isBlank()}"
+						            th:attr="data-memo=${item.memo}">
+						        📝
+						    </button>
+						</td>
+						<td>
+						    <form th:action="@{/purchase}" method="post">
+						        <input type="hidden" name="id" th:value="${item.id}">
+						        <button type="submit">購入</button>
+						    </form>
 
-							form
-							↓
-							入力データを送信するためのHTMLタグ。
-
-							今回の購入ボタンでは、
-
-							購入ボタン押下
-							↓
-							/purchase へ送信
-							↓
-							Controllerの purchase() 実行
-
-							という流れになる。
-
-
-							th:action
-
-							↓
-
-							Thymeleaf用の属性。
-
-							@{/purchase}
-
-							は、
-
-							「/purchase へ送信する」
-
-							という意味。
-
-							対応するControllerは、
-
-							@PostMapping("/purchase")
-
-
-							method="post"
-
-							↓
-
-							POST方式でデータ送信する設定。
-
-							今回は購入処理の実行に使用している。
-
-
-							<input type="hidden">
-
-							↓
-
-							画面には表示しない入力項目。
-
-							今回は、
-
-							name="id"
-
-							でItemのIDを保持している。
-
-
-							th:value="${item.id}"
-
-							↓
-
-							Thymeleafが item.id の値を埋め込む。
-
-							例：
-
-							item.id = 3
-
-							↓
-
-							<input value="3">
-
-							になる。
-
-
-							<button type="submit">
-
-							↓
-
-							フォーム送信ボタン。
-
-							押すと form の内容が
-							Controllerへ送信される。
-
-
-							覚えておけば十分なこと：
-
-							・th は Thymeleaf の th
-
-							・@{/purchase} は /purchase へ送信
-
-							・購入ボタンを押すと
-							  Controllerの purchase() が呼ばれる
-
-							・hidden は画面に見えないデータ
-							-->
+						    <form th:action="@{/delete}" method="post">
+						        <input type="hidden" name="id" th:value="${item.id}">
+						        <button type="submit" class="delete-button">🗑</button>
+						    </form>
 						</td>
 
 					</tr>
@@ -330,7 +245,30 @@
 		</section>
 
 	</main>
+	<div id="memo-modal" class="modal hidden">
+	    <div class="modal-content">
+	        <p id="memo-text"></p>
+	        <button type="button" id="memo-close">閉じる</button>
+	    </div>
+	</div>
 
+	<script>
+	    const memoButtons = document.querySelectorAll(".memo-button");
+	    const modal = document.getElementById("memo-modal");
+	    const memoText = document.getElementById("memo-text");
+	    const closeButton = document.getElementById("memo-close");
+
+	    memoButtons.forEach(button => {
+	        button.addEventListener("click", () => {
+	            memoText.textContent = button.dataset.memo;
+	            modal.classList.remove("hidden");
+	        });
+	    });
+
+	    closeButton.addEventListener("click", () => {
+	        modal.classList.add("hidden");
+	    });
+	</script>
 </body>
 
 </html>

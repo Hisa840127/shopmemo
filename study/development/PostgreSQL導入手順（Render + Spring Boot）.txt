@@ -113,6 +113,7 @@ application-prod.properties
 ```properties
 spring.datasource.url=${DATABASE_URL}
 spring.datasource.driver-class-name=org.postgresql.Driver
+spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
 ```
 
 DATABASE_URL は

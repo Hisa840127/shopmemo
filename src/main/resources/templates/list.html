@@ -35,24 +35,27 @@
 						<td th:text="${item.quantity}"></td>
 						<td th:text="${item.unit}"></td>
 						<td th:text="${item.shopName}"></td>
+						<!-- メモ小窓表示用ボタン -->
 						<td>
-						    <button type="button"
-						            class="memo-button"
-						            th:if="${item.memo != null and !item.memo.isBlank()}"
-						            th:attr="data-memo=${item.memo}">
-						        📝
-						    </button>
+							<button type="button" class="memo-button"
+								th:if="${item.memo != null and !item.memo.isBlank()}" 
+								th:attr="data-memo=${item.memo}">
+								📝
+							</button>
 						</td>
-						<td>
-						    <form th:action="@{/purchase}" method="post">
-						        <input type="hidden" name="id" th:value="${item.id}">
-						        <button type="submit">購入</button>
-						    </form>
 
-						    <form th:action="@{/delete}" method="post">
-						        <input type="hidden" name="id" th:value="${item.id}">
-						        <button type="submit" class="delete-button">🗑</button>
-						    </form>
+						<td>
+							<!-- 購入ボタン -->
+							<form th:action="@{/purchase}" method="post">
+								<input type="hidden" name="id" th:value="${item.id}">
+								<button type="submit">購入</button>
+							</form>
+
+							<!-- 削除ボタン -->
+							<form th:action="@{/delete}" method="post">
+								<input type="hidden" name="id" th:value="${item.id}">
+								<button type="submit" class="delete-button">🗑</button>
+							</form>
 						</td>
 
 					</tr>
@@ -63,181 +66,17 @@
 			<div class="actions">
 				<button>まとめて購入処理する</button>
 			</div>
-			
+
 			<!-- 新規追加フォーム -->
 			<form class="actions" action="/items" method="post">
-			    <input type="text" name="name" placeholder="品目名">
-			    <input type="number" name="quantity" placeholder="数量">
-			    <input type="text" name="unit" placeholder="単位">
-			    <input type="text" name="shopName" placeholder="購入店舗">
-			    <input type="text" name="memo" placeholder="メモ">
-			    <button type="submit">追加</button>
+				<input type="text" name="name" placeholder="品目名">
+				<input type="number" name="quantity" placeholder="数量">
+				<input type="text" name="unit" placeholder="単位">
+				<input type="text" name="shopName" placeholder="購入店舗">
+				<input type="text" name="memo" placeholder="メモ">
+				<button type="submit">追加</button>
 			</form>
-			<!--
-			<重要>
 
-			【この部分は何をしている？】
-
-			買うものリストへ
-			新しいItemを追加する入力フォーム。
-
-			ユーザーが入力した内容を
-			Controllerへ送信している。
-
-
-			【最低限どこを見る？】
-
-			action="/items"
-
-			↓
-
-			/itemsへ送信
-
-
-			method="post"
-
-			↓
-
-			POSTで送信
-
-
-			name="name"
-
-			↓
-
-			品目名
-
-
-			name="quantity"
-
-			↓
-
-			数量
-
-
-			<button type="submit">
-
-			↓
-
-			追加ボタン
-
-
-			【ざっくり流れ】
-
-			入力
-			↓
-
-			追加ボタン押下
-
-			↓
-
-			/itemsへPOST
-
-			↓
-
-			Controllerの addItem()
-
-			↓
-
-			Item作成
-
-			↓
-
-			DB保存
-
-			↓
-
-			買うものリスト再表示
-
-
-			【覚えておけば十分なこと】
-
-			・新規追加用フォーム
-
-			・入力内容を /items へ送信
-
-			・Controllerの addItem() が呼ばれる
-
-			・細かい補足を忘れても、
-			  「Itemを追加するフォーム」
-			  と分かればOK
-			-->
-			<!--
-			<補足1>
-
-			input の name は、
-			Controller側の
-			@RequestParam と対応している。
-
-			例：
-
-			<input name="name">
-
-			↓
-
-			@RequestParam String name
-
-
-			<input name="quantity">
-
-			↓
-
-			@RequestParam int quantity
-
-
-			送信時に、
-			同じ名前同士で値が渡される。
-			-->
-			
-			<!--
-			<補足2>
-
-			このフォームには、
-
-			th:value
-
-			が付いていない。
-
-			そのため、
-			入力欄は空の状態で表示される。
-
-
-			例：
-
-			<input
-			    type="text"
-			    name="name"
-			    placeholder="品目名">
-
-			↓
-
-			空欄表示
-
-
-			一方で、
-
-			th:value="${historyItem.name}"
-
-			が付いている場合は、
-
-			Controllerから渡された値が
-			初期値として表示される。
-
-
-			イメージ：
-
-			新規追加フォーム
-			↓
-
-			空欄から入力
-
-
-			再投入編集フォーム
-			↓
-
-			最初から値が入っている
-			-->
-			
 			<nav class="actions">
 				<a href="/">トップへ戻る</a>
 				<a href="/history">購入履歴を見る</a>
@@ -245,30 +84,34 @@
 		</section>
 
 	</main>
+	<!--メモ表示用モーダル-->
 	<div id="memo-modal" class="modal hidden">
-	    <div class="modal-content">
-	        <p id="memo-text"></p>
-	        <button type="button" id="memo-close">閉じる</button>
-	    </div>
+		<div class="modal-content">
+			<p id="memo-text"></p>
+			<button type="button" id="memo-close">閉じる</button>
+		</div>
 	</div>
 
+	<!--メモ表示用JavaScript-->
 	<script>
-	    const memoButtons = document.querySelectorAll(".memo-button");
-	    const modal = document.getElementById("memo-modal");
-	    const memoText = document.getElementById("memo-text");
-	    const closeButton = document.getElementById("memo-close");
+		const memoButtons = document.querySelectorAll(".memo-button");
+		const modal = document.getElementById("memo-modal");
+		const memoText = document.getElementById("memo-text");
+		const closeButton = document.getElementById("memo-close");
 
-	    memoButtons.forEach(button => {
-	        button.addEventListener("click", () => {
-	            memoText.textContent = button.dataset.memo;
-	            modal.classList.remove("hidden");
-	        });
-	    });
+		memoButtons.forEach(button => {
+			button.addEventListener("click", () => {
+				memoText.textContent = button.dataset.memo;
+				modal.classList.remove("hidden");
+			});
+		});
 
-	    closeButton.addEventListener("click", () => {
-	        modal.classList.add("hidden");
-	    });
+		closeButton.addEventListener("click", () => {
+			modal.classList.add("hidden");
+		});
 	</script>
+
+
 </body>
 
 </html>

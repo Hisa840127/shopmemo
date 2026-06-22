@@ -1,0 +1,302 @@
+# I新規追加フォーム
+
+## 重要
+
+### 【この部分は何をしている？】
+
+買うものリストへ
+新しい Item を追加する入力フォーム。
+
+ユーザーが入力した内容を
+Controllerへ送信している。
+
+---
+
+### 【最低限どこを見る？】
+
+action="/items"
+
+↓
+
+/items へ送信
+
+---
+
+method="post"
+
+↓
+
+POSTで送信
+
+---
+
+name="name"
+
+↓
+
+品目名
+
+---
+
+name="quantity"
+
+↓
+
+数量
+
+---
+
+<button type="submit">
+
+↓
+
+追加ボタン
+
+---
+
+### 【ざっくり流れ】
+
+入力
+
+↓
+
+追加ボタン押下
+
+↓
+
+/items へ POST
+
+↓
+
+Controller の addItem()
+
+↓
+
+Item作成
+
+↓
+
+DB保存
+
+↓
+
+買うものリスト再表示
+
+---
+
+### 【覚えておけば十分なこと】
+
+・新規追加用フォーム
+
+・入力内容を /items へ送信
+
+・Controller の addItem() が呼ばれる
+
+・細かい補足を忘れても、
+
+「Itemを追加するフォーム」
+
+と分かればOK
+
+==================================================
+
+# 補足1　name と @RequestParam
+
+input の name は、
+
+Controller側の
+
+@RequestParam
+
+と対応している。
+
+---
+
+例
+
+<input name="name">
+
+↓
+
+@RequestParam String name
+
+---
+
+<input name="quantity">
+
+↓
+
+@RequestParam int quantity
+
+---
+
+送信時に、
+
+同じ名前同士で値が渡される。
+
+イメージ
+
+HTML
+
+↓
+
+name="name"
+
+↓
+
+POST送信
+
+↓
+
+Controller
+
+↓
+
+@RequestParam String name
+
+==================================================
+
+# 補足2　th:value が無い理由
+
+このフォームには
+
+th:value
+
+が付いていない。
+
+そのため、
+
+入力欄は空の状態で表示される。
+
+---
+
+例
+
+<input
+ type="text"
+ name="name"
+ placeholder="品目名">
+
+↓
+
+空欄表示
+
+---
+
+一方で、
+
+th:value="${historyItem.name}"
+
+が付いている場合は、
+
+Controllerから渡された値が
+
+初期値として表示される。
+
+---
+
+イメージ
+
+新規追加フォーム
+
+↓
+
+空欄から入力
+
+---
+
+再投入編集フォーム
+
+↓
+
+最初から値が入っている
+
+==================================================
+
+# 補足3　action と method
+
+form の送信先は、
+
+action
+
+で決まる。
+
+送信方法は、
+
+method
+
+で決まる。
+
+---
+
+今回
+
+action="/items"
+
+↓
+
+/items へ送信
+
+---
+
+method="post"
+
+↓
+
+POSTで送信
+
+---
+
+そのため、
+
+追加ボタンを押すと、
+
+/items
+
+へ POST リクエストが送られる。
+
+==================================================
+
+# 補足4　入力欄とControllerの流れ
+
+入力欄
+
+↓
+
+name 属性を付ける
+
+↓
+
+form送信
+
+↓
+
+Controller
+
+↓
+
+@RequestParam
+
+↓
+
+Item生成
+
+↓
+
+Repository.save()
+
+↓
+
+DB保存
+
+---
+
+覚えておけば十分なこと
+
+・action は送信先
+
+・method は送信方法
+
+・name は Controller の @RequestParam と対応する
+
+・新規追加フォームは th:value が無いため空欄から入力する

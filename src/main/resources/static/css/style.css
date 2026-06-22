@@ -1,604 +1,110 @@
 @charset "UTF-8";
+
 body {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    margin: 16px;
-    line-height: 1.6;
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+	margin: 16px;
+	line-height: 1.6;
 	background-color: #121212;
-	   color: rgb(255, 255, 255);
-	   font-size: 40px;
+	color: rgb(255, 255, 255);
+	font-size: 40px;
 }
 
 header {
-    margin-bottom: 24px;
+	margin-bottom: 24px;
 }
+
 h1 {
-    font-size: 2.5rem;
-    margin-bottom: 4px;
+	font-size: 2.5rem;
+	margin-bottom: 4px;
 }
+
 h2 {
-    font-size: 2.5rem;
-    margin-top: 24px;
-    margin-bottom: 8px;
+	font-size: 2.5rem;
+	margin-top: 24px;
+	margin-bottom: 8px;
 }
+
 .section {
-    margin-bottom: 32px;
+	margin-bottom: 32px;
 }
+
+/* tableの見た目を整えるCSS */
 table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 8px;
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 8px;
 }
-th, td {
-    border: 1px solid #777;
-    padding: 4px 6px;
-    font-size: 2.5rem;
+
+th,
+td {
+	border: 1px solid #777;
+	padding: 4px 6px;
+	font-size: 2.5rem;
 	background-color: #2a2a2a;
-    color: #ffffff;
+	color: #ffffff;
 }
+
 th {
-    background-color: #2a2a2a;
-    color: #ffffff;
+	background-color: #2a2a2a;
+	color: #ffffff;
 }
 
-/*
- * <重要>
- *
- * 【この部分は何をしている？】
- *
- * table の見た目を整えるCSS。
- *
- * 履歴一覧や買うものリストの
- * 表(table)に対して、
- *
- * ・枠線
- * ・余白
- * ・文字サイズ
- * ・見出しの背景色
- *
- * を設定している。
- *
- *
- * 【最低限どこを見る？】
- *
- * border
- *
- * ↓
- *
- * 枠線
- *
- *
- * padding
- *
- * ↓
- *
- * セル内の余白
- *
- *
- * font-size
- *
- * ↓
- *
- * 文字サイズ
- *
- *
- * background-color
- *
- * ↓
- *
- * 背景色
- *
- *
- * 【ざっくり流れ】
- *
- * HTML
- * ↓
- * table
- * ↓
- * th, td
- * ↓
- * CSS適用
- * ↓
- * 見た目が整う
- *
- *
- * 【覚えておけば十分なこと】
- *
- * ・th は表の見出し
- *
- * ・td は表のデータ部分
- *
- * ・border は枠線
- *
- * ・padding は内側の余白
- *
- * ・background-color は背景色
- *
- * ・細かい補足を忘れても、
- *   「表の見た目を整えるCSS」
- *   と分かればOK
- */
-
-/*
- * <補足1>
- *
- * th, td
- *
- * ↓
- *
- * 表(table)のセル。
- *
- * th
- * ↓
- * 見出し
- *
- * td
- * ↓
- * データ
- *
- *
- * 例：
- *
- * ┌──────┬──────┐
- * │品目名 │数量   │ ← th
- * ├──────┼──────┤
- * │卵     │10     │ ← td
- * └──────┴──────┘
- */
-
-/*
- * <補足2>
- *
- * border: 1px solid #ccc;
- *
- * ↓
- *
- * 枠線を表示する。
- *
- * 1px
- * ↓
- * 線の太さ
- *
- * solid
- * ↓
- * 実線
- *
- * #ccc
- * ↓
- * 薄い灰色
- */
-
-/*
- * <補足3>
- *
- * padding: 6px 8px;
- *
- * ↓
- *
- * セルの内側の余白。
- *
- * 6px
- * ↓
- * 上下の余白
- *
- * 8px
- * ↓
- * 左右の余白
- *
- *
- * イメージ：
- *
- * paddingなし
- *
- * |卵|
- *
- *
- * paddingあり
- *
- * |  卵  |
- *
- *
- * 文字が枠線に
- * くっつかなくなる。
- */
-
-/*
- * <補足4>
- *
- * background-color: #f5f5f5;
- *
- * ↓
- *
- * 背景色を設定する。
- *
- * 今回は th にだけ適用しているため、
- * 見出し行だけ薄い灰色になる。
- *
- *
- * 目的：
- *
- * 見出しとデータを
- * 見分けやすくするため。
- */
- /*
-  * <補足5>
-  *
-  * table関連のタグについて。
-  *
-  * HTMLの表(table)では、
-  * よく次のタグが使用される。
-  *
-  *
-  * table
-  *
-  * ↓
-  *
-  * 表全体
-  *
-  *
-  * tr
-  *
-  * ↓
-  *
-  * table row
-  *
-  * ↓
-  *
-  * 表の1行
-  *
-  *
-  * th
-  *
-  * ↓
-  *
-  * table header
-  *
-  * ↓
-  *
-  * 表の見出しセル
-  *
-  *
-  * td
-  *
-  * ↓
-  *
-  * table data
-  *
-  * ↓
-  *
-  * 表のデータセル
-  *
-  *
-  * イメージ：
-  *
-  * <table>
-  *     <tr>
-  *         <th>品目名</th>
-  *         <th>数量</th>
-  *     </tr>
-  *
-  *     <tr>
-  *         <td>卵</td>
-  *         <td>10</td>
-  *     </tr>
-  * </table>
-  *
-  *
-  * ↓
-  *
-  * ┌──────┬──────┐
-  * │品目名 │数量   │ ← th
-  * ├──────┼──────┤
-  * │卵     │10     │ ← td
-  * └──────┴──────┘
-  *
-  *
-  * 対応関係：
-  *
-  * table
-  * ↓
-  * 表全体
-  *
-  *
-  * tr
-  * ↓
-  * table row
-  * ↓
-  * 表の行
-  *
-  *
-  * th
-  * ↓
-  * table header
-  * ↓
-  * 表の見出し
-  *
-  *
-  * td
-  * ↓
-  * table data
-  * ↓
-  * 表のデータ
-  *
-  *
-  * ポイント：
-  *
-  * th や td は
-  * 単なる呪文ではなく、
-  *
-  * table header
-  *
-  * table data
-  *
-  * の略。
-  *
-  *
-  * 意味が分かると、
-  *
-  * table
-  * ↓
-  * row
-  * ↓
-  * header
-  * ↓
-  * data
-  *
-  * という構造で理解しやすくなる。
-  */
-  /*
-   * <補足6>
-   * 
-   * thead と tbody について。
-   *
-   * table の中では、
-   *
-   * thead
-   *
-   * ↓
-   *
-   * 見出し部分
-   *
-   *
-   * tbody
-   *
-   * ↓
-   *
-   * データ部分
-   *
-   *
-   * イメージ：
-   *
-   * table
-   * ↓
-   * 表全体
-   *
-   * ├─ thead
-   * │  ↓
-   * │  見出し部分
-   * │
-   * │  └─ tr
-   * │      ↓
-   * │      見出し行
-   * │
-   * └─ tbody
-   *    ↓
-   *    データ部分
-   *
-   *    └─ tr
-   *        ↓
-   *        データ行
-   *
-   *
-   * 対応関係：
-   *
-   * table
-   * ↓
-   * 表全体
-   *
-   *
-   * tr
-   * ↓
-   * table row
-   * ↓
-   * 表の行
-   *
-   *
-   * th
-   * ↓
-   * table header
-   * ↓
-   * 表の見出し
-   *
-   *
-   * td
-   * ↓
-   * table data
-   * ↓
-   * 表のデータ
-   *
-   *
-   * ポイント：
-   *
-   * thead は
-   * 見出し行を入れる箱。
-   *
-   *
-   * tbody は
-   * データ行を入れる箱。
-   *
-   *
-   * tr は単独で使うというより、
-   *
-   * thead
-   *
-   * または
-   *
-   * tbody
-   *
-   * の中に入れることが多い。
-   * 
-   * trで1行作りそこにセルをthやtdを使って埋めていくイメージ
-   *
-   *
-   * 補足：
-   *
-   * HTMLとしては、
-   *
-   * thead
-   *
-   * や
-   *
-   * tbody
-   *
-   * を書かなくても
-   * 動く場合がある。
-   *
-   *
-   * ただし、
-   *
-   * 「ここが見出し」
-   *
-   * 「ここがデータ」
-   *
-   * を分かりやすくするため、
-   * 実務では書くことが多い。
-   *
-   *
-   * 関連：
-   *
-   * history.html の table 部分参照
-   */
 .actions {
-    margin-top: 8px;
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
+	margin-top: 8px;
+	display: flex;
+	gap: 8px;
+	flex-wrap: wrap;
 }
+
 input {
-    font-size: 40px;
-    padding: 4px;
+	font-size: 40px;
+	padding: 4px;
 }
+
 button {
-    font-size: 40px;
-    padding: 4px 6px;
-    cursor: pointer;
+	font-size: 40px;
+	padding: 4px 6px;
+	cursor: pointer;
 }
 
 small {
-    color: #aaa;
+	color: #aaa;
 }
 
 a,
 a:visited {
-    color: #66b3ff;
+	color: #66b3ff;
 }
-/*
- * <補足>
- *
- * CSS調整時の確認手順
- *
- * ① localhostで確認
- *
- * ↓
- *
- * CSSを変更したら、
- * localhost:8080 を更新(F5)して確認する。
- *
- *
- * ② ChromeのiPhoneモードで確認
- *
- * ↓
- *
- * F12
- *
- * ↓
- *
- * デバイスツールバー
- *
- * ↓
- *
- * iPhoneを選択
- *
- * ↓
- *
- * スマホ表示を確認する。
- *
- *
- * ③ 調整完了後にpush
- *
- * ↓
- *
- * CSS変更のたびにpushする必要はない。
- *
- * localhostで調整を完了させてから
- * commit・pushする。
- *
- *
- * ④ Renderで最終確認
- *
- * ↓
- *
- * GitHubへpush後、
- * Renderの自動デプロイ完了を待つ。
- *
- * 公開環境で問題ないか確認する。
- *
- *
- * ⑤ 実機で確認
- *
- * ↓
- *
- * 最後にスマホ実機で確認する。
- *
- * localhostやChromeのiPhoneモードで
- * 問題なく見えても、
- * 実際の使用感は異なる場合がある。
- *
- *
- * ポイント：
- *
- * CSS調整時は、
- *
- * CSS変更
- * ↓
- * localhostで確認
- * ↓
- * ChromeのiPhoneモードで確認
- * ↓
- * push
- * ↓
- * Render確認
- * ↓
- * 実機確認
- *
- * の順で進めると効率が良い。
- */
- .modal {
-     position: fixed;
-     inset: 0;
-     background-color: rgba(0, 0, 0, 0.6);
 
-     display: flex;
-     justify-content: center;
-     align-items: center;
- }
+/* modal(画面全体)のCSS */
+.modal {
+	position: fixed;
+	inset: 0;
+	background-color: rgba(0, 0, 0, 0.6);
 
- .hidden {
-     display: none;
- }
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.hidden {
+	display: none;
+}
 
- .modal-content {
-     background-color: #222;
-     color: white;
-     padding: 20px;
-     border: 1px solid #777;
-     border-radius: 12px;
-     width: 80%;
-     max-width: 320px;
- }
- td form {
-     margin: 2px 0;
- }
+/* modal-content（小窓本体）のCSS */
+.modal-content {
+	background-color: #222;
+	color: white;
+	padding: 20px;
+	border: 1px solid #777;
+	border-radius: 12px;
+	width: 80%;
+	max-width: 320px;
+}
 
- .delete-button {
-     background-color: #444;
- }
+td form {
+	margin: 2px 0;
+}
+
+.delete-button {
+	background-color: #444;
+}

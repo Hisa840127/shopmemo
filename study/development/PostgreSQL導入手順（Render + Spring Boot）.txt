@@ -1,0 +1,324 @@
+# PostgreSQL導入手順（Render + Spring Boot）
+
+## 目的
+
+Render上でも
+
+データを永続保存できるようにする。
+
+H2では、
+
+Renderの再起動時に
+
+データが消えてしまうため、
+
+PostgreSQLを利用する。
+
+==================================================
+
+## 手順①　PostgreSQLドライバ追加
+
+pom.xml に
+
+PostgreSQLドライバを追加する。
+
+```xml
+<dependency>
+    <groupId>org.postgresql</groupId>
+    <artifactId>postgresql</artifactId>
+    <scope>runtime</scope>
+</dependency>
+```
+
+これにより、
+
+Spring Bootから
+
+PostgreSQLへ接続できる。
+
+==================================================
+
+## 手順②　設定ファイルを分ける
+
+application.properties
+
+↓
+
+共通設定
+
+---
+
+application-local.properties
+
+↓
+
+ローカル(H2)
+
+---
+
+application-prod.properties
+
+↓
+
+Render(PostgreSQL)
+
+共通設定と
+
+環境ごとの設定を分離する。
+
+==================================================
+
+## 手順③　共通設定を書く
+
+application.properties
+
+```properties
+spring.application.name=shopmemo
+
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+```
+
+ローカル・Renderの両方で
+
+利用する設定を書く。
+
+==================================================
+
+## 手順④　ローカル(H2)設定を書く
+
+application-local.properties
+
+```properties
+spring.datasource.driver-class-name=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=
+spring.datasource.url=jdbc:h2:file:./data/shopmemo
+
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2-console
+```
+
+ローカル開発では
+
+今まで通りH2を利用する。
+
+==================================================
+
+## 手順⑤　Render(PostgreSQL)設定を書く
+
+application-prod.properties
+
+```properties
+spring.datasource.url=${DATABASE_URL}
+spring.datasource.driver-class-name=org.postgresql.Driver
+```
+
+DATABASE_URL は
+
+Renderの環境変数から取得する。
+
+==================================================
+
+## 手順⑥　RenderでPostgreSQL作成
+
+Render
+
+↓
+
+New
+
+↓
+
+PostgreSQL
+
+↓
+
+作成
+
+Projectは
+
+shopmemoと同じProjectへ追加する。
+
+Regionも
+
+Web Serviceと同じものを選ぶ。
+
+==================================================
+
+## 手順⑦　環境変数追加
+
+shopmemo
+
+↓
+
+Environment
+
+↓
+
+Add Variable
+
+↓
+
+Datastore URL
+
+↓
+
+shopmemo-db
+
+↓
+
+DATABASE_URL 作成
+
+さらに、
+
+```
+SPRING_PROFILES_ACTIVE
+```
+
+↓
+
+```
+prod
+```
+
+を追加する。
+
+Renderでは
+
+application-prod.properties
+
+が読み込まれるようになる。
+
+==================================================
+
+## 手順⑧　ローカルは local プロファイル
+
+Pleiades の
+
+Run Configuration
+
+↓
+
+VM Arguments
+
+↓
+
+```
+-Dspring.profiles.active=local
+```
+
+を追加する。
+
+ローカルでは
+
+application-local.properties
+
+が読み込まれる。
+
+==================================================
+
+## 手順⑨　GitHubへ反映
+
+commit
+
+↓
+
+push
+
+↓
+
+Render自動デプロイ
+
+==================================================
+
+## 手順⑩　動作確認
+
+Renderで
+
+データを追加
+
+↓
+
+Restart Service
+
+↓
+
+再度アクセス
+
+↓
+
+データが残っていれば成功
+
+これにより、
+
+PostgreSQLへ
+
+保存されていることを確認できる。
+
+==================================================
+
+## 全体の流れ
+
+pom.xmlへドライバ追加
+
+↓
+
+設定ファイル分割
+
+↓
+
+RenderでPostgreSQL作成
+
+↓
+
+DATABASE_URL追加
+
+↓
+
+SPRING_PROFILES_ACTIVE=prod追加
+
+↓
+
+ローカルは
+-Dspring.profiles.active=local
+
+↓
+
+commit
+
+↓
+
+push
+
+↓
+
+Renderデプロイ
+
+↓
+
+Restart Service
+
+↓
+
+データ保持確認
+
+==================================================
+
+## 覚えておけば十分なこと
+
+・H2はローカル開発用
+
+・RenderはPostgreSQLを利用する
+
+・application.properties は共通設定
+
+・application-local はH2用
+
+・application-prod はPostgreSQL用
+
+・環境によって設定を切り替えるために
+プロファイルを利用する
+
+・Restart Service後もデータが残れば成功

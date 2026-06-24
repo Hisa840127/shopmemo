@@ -12,13 +12,13 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private int quantity;
+    private Integer quantity;
     private String unit;
     private String shopName;
     private String memo;
 
     protected Item() {} 
-    public Item(String name, int quantity, String unit, String shopName,String memo) {
+    public Item(String name, Integer quantity, String unit, String shopName,String memo) {
         this.name = name;
         this.quantity = quantity;
         this.unit = unit;
@@ -28,7 +28,7 @@ public class Item {
 
     public Long getId() { return id; }
     public String getName() { return name; }
-    public int getQuantity() { return quantity; }
+    public Integer getQuantity() { return quantity; }
     public String getUnit() { return unit; }
     public String getShopName() { return shopName; }
     public String getMemo() { return memo; }

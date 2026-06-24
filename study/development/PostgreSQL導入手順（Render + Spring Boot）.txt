@@ -111,14 +111,13 @@ spring.h2.console.path=/h2-console
 application-prod.properties
 
 ```properties
-spring.datasource.url=${DATABASE_URL}
+spring.datasource.url=jdbc:postgresql://dpg-d8s9os37uimc73845jp0-a:5432/shopmemo_db
+spring.datasource.username=shopmemo_db_user
+spring.datasource.password=${DB_PASSWORD}
 spring.datasource.driver-class-name=org.postgresql.Driver
-spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
 ```
 
-DATABASE_URL は
-
-Renderの環境変数から取得する。
+パスワードは Render の環境変数（DB_PASSWORD）から取得する。
 
 ==================================================
 
@@ -170,7 +169,8 @@ shopmemo-db
 
 ↓
 
-DATABASE_URL 作成
+DB_PASSWORD
+を追加する。（値はコピペ）
 
 さらに、
 
@@ -185,6 +185,8 @@ prod
 ```
 
 を追加する。
+
+また、
 
 Renderでは
 
@@ -274,7 +276,7 @@ RenderでPostgreSQL作成
 
 ↓
 
-DATABASE_URL追加
+DB_PASSWORD 追加
 
 ↓
 
@@ -323,3 +325,5 @@ Restart Service
 プロファイルを利用する
 
 ・Restart Service後もデータが残れば成功
+
+・DBのパスワードは環境変数で管理する

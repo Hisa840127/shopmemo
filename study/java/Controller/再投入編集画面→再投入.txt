@@ -1,0 +1,112 @@
+# フォーム送信からDB保存まで
+
+## 目的
+
+HTMLフォームから送信された内容を
+
+ItemとしてDBへ保存する流れを理解する。
+
+==================================================
+
+## 全体の流れ
+
+HTML入力
+
+↓
+
+submit
+
+↓
+
+Controller
+
+↓
+
+SpringがItemを組み立てる
+
+↓
+
+itemRepository.save(item)
+
+↓
+
+DBへ保存
+
+==================================================
+
+## Controller
+
+```java
+@PostMapping("/items")
+public String addItem(Item item) {
+
+    itemRepository.save(item);
+
+    return "redirect:/list";
+}
+
+Springがフォームの内容から
+
+Itemを自動で作成してくれる。
+
+==================================================
+
+フォームとの対応
+
+HTML
+
+<input name="name">
+<input name="quantity">
+<input name="unit">
+<input name="shopName">
+<input name="memo">
+
+↓
+
+Spring
+
+↓
+
+Item
+
+item.getName()
+
+item.getQuantity()
+
+item.getUnit()
+
+item.getShopName()
+
+item.getMemo()
+
+フォームの name 属性と
+
+Itemのフィールド名が対応している。
+
+==================================================
+
+save()
+itemRepository.save(item);
+
+ItemをDBへ保存する。
+
+==================================================
+
+redirect
+return "redirect:/list";
+
+保存後、
+
+買うものリスト画面へ戻る。
+
+==================================================
+
+覚えておけば十分なこと
+
+・フォーム送信後、SpringがItemを自動で作成する
+
+・フォームのname属性とItemのフィールド名が対応している
+
+・save()でDBへ保存する
+
+・redirectで一覧画面へ戻る

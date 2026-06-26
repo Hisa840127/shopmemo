@@ -21,6 +21,7 @@
 			<table>
 				<thead>
 					<tr>
+						<th>選択</th>
 						<th>品目名</th>
 						<th>数量</th>
 						<th>単位</th>
@@ -31,6 +32,11 @@
 				</thead>
 				<tbody>
 					<tr th:each="item : ${items}">
+						<td>
+						    <input type="checkbox"
+						           name="ids"
+						           th:value="${item.id}">
+						</td>
 						<td th:text="${item.name}"></td>
 						<td th:text="${item.quantity}"></td>
 						<td th:text="${item.unit}"></td>

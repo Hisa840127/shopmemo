@@ -76,6 +76,7 @@ input[type="checkbox"] {
 .quantity-input {
     width: 50px;
 	text-align: center;
+	box-sizing: border-box;
 }
 button {
 	font-size: 40px;

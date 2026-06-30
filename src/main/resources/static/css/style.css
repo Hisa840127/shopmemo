@@ -74,9 +74,19 @@ input[type="checkbox"] {
     height: 28px;
 }
 .quantity-input {
-    width: 50px;
-	text-align: center;
-	box-sizing: border-box;
+    width: 40px;
+    height: 36px;
+    font-size: 40px;
+    text-align: center;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.plus-button,
+.minus-button {
+    width: 36px;
+    height: 36px;
+    padding: 0;
 }
 button {
 	font-size: 40px;

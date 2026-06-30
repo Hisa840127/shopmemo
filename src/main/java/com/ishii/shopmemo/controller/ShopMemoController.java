@@ -141,4 +141,4 @@ public class ShopMemoController {
 
 }
 
-/*デプロイ動作確認用コメント6/26*/
+/*デプロイ動作確認用コメント6/30*/

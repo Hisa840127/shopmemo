@@ -69,30 +69,34 @@ input {
 	font-size: 40px;
 	padding: 4px;
 }
+
 input[type="checkbox"] {
-    width: 28px;
-    height: 28px;
+	width: 28px;
+	height: 28px;
 }
+
 .quantity-input {
-    width: 40px;
-    height: 36px;
-    font-size: 40px;
-    text-align: center;
-    padding: 0;
-    box-sizing: border-box;
+	text-align: center;
+	box-sizing: border-box;
+	background-color: #2b2b2b;
+	color: white;
+	border: 1px solid #666;
 }
 
 .plus-button,
 .minus-button {
-    width: 36px;
-    height: 36px;
-    padding: 0;
+	background-color: #3a3a3a;
+	color: white;
+	border: 1px solid #666;
+	border-radius: 4px;
 }
+
 button {
 	font-size: 40px;
 	padding: 4px 6px;
 	cursor: pointer;
 }
+
 .delete-button {
 	background-color: #444;
 }
@@ -117,6 +121,7 @@ a:visited {
 	justify-content: center;
 	align-items: center;
 }
+
 .hidden {
 	display: none;
 }
@@ -135,9 +140,6 @@ a:visited {
 .quantity-form {
 	display: flex;
 	align-items: center;
-    gap: 4px;
+	gap: 4px;
 	justify-content: center;
 }
-
-
-

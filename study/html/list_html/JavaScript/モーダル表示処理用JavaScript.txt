@@ -1,4 +1,4 @@
-# メモ表示用 JavaScript
+# モーダル表示処理用 JavaScript
 
 ## 重要
 

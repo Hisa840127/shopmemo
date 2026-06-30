@@ -33,19 +33,23 @@
 				<tbody>
 					<tr th:each="item : ${items}">
 						<td>
-						    <input type="checkbox"
-						           name="ids"
-						           th:value="${item.id}">
+							<input type="checkbox" name="ids" th:value="${item.id}">
 						</td>
 						<td th:text="${item.name}"></td>
-						<td th:text="${item.quantity}"></td>
+						<td>
+							<form class="quantity-form">
+								<input type="hidden" name="id" th:value="${item.id}">
+								<button type="button" class="minus-button">−</button>
+								<input class="quantity-input" type="number" name="quantity" th:value="${item.quantity}">
+								<button type="button" class="plus-button">+</button>
+							</form>
+						</td>
 						<td th:text="${item.unit}"></td>
 						<td th:text="${item.shopName}"></td>
 						<!-- メモ小窓表示用ボタン -->
 						<td>
 							<button type="button" class="memo-button"
-								th:if="${item.memo != null and !item.memo.isBlank()}" 
-								th:attr="data-memo=${item.memo}">
+								th:if="${item.memo != null and !item.memo.isBlank()}" th:attr="data-memo=${item.memo}">
 								📝
 							</button>
 						</td>
@@ -54,9 +58,8 @@
 							<!-- 購入ボタン -->
 							<form th:action="@{/purchase}" method="post">
 								<input type="hidden" name="id" th:value="${item.id}">
-								<button type="submit">購入</button>
+								<button type="submit">🛒</button>
 							</form>
-
 							<!-- 削除ボタン -->
 							<form th:action="@{/delete}" method="post">
 								<input type="hidden" name="id" th:value="${item.id}">
@@ -97,8 +100,7 @@
 			<button type="button" id="memo-close">閉じる</button>
 		</div>
 	</div>
-
-	<!--メモ表示用JavaScript-->
+	<!--モーダル表示処理用JavaScript-->
 	<script>
 		const memoButtons = document.querySelectorAll(".memo-button");
 		const modal = document.getElementById("memo-modal");
@@ -116,6 +118,83 @@
 			modal.classList.add("hidden");
 		});
 	</script>
+	
+	<!--数量操作用JavaScript-->
+	<script>
+		// +ボタン操作用
+		const plusButtons = document.querySelectorAll(".plus-button");
+
+		plusButtons.forEach(button => {
+
+		    button.addEventListener("click", () => {
+
+		        const form = button.closest("form");
+		        const input = form.querySelector(".quantity-input");
+
+		        // 数量を+1
+		        input.value = Number(input.value) + 1;
+
+		        // hiddenのid取得
+		        const id = form.querySelector('input[name="id"]').value;
+
+		        // Controllerへ送信
+		        fetch("/items/updateQuantity", {
+
+		            method: "POST",
+
+		            headers: {
+		                "Content-Type": "application/x-www-form-urlencoded"
+		            },
+
+		            body:
+		                "id=" + encodeURIComponent(id) +
+		                "&quantity=" + encodeURIComponent(input.value)
+
+		        });
+
+		    });
+
+		});
+		// -ボタン操作用
+		const minusButtons = document.querySelectorAll(".minus-button");
+
+		minusButtons.forEach(button => {
+
+			button.addEventListener("click", () => {
+
+				const form = button.closest("form");
+
+				const input = form.querySelector(".quantity-input");
+				
+				if (Number(input.value) > 0) {
+				           input.value = Number(input.value) - 1;
+				       }
+				
+		        // hiddenのid取得
+		        const id = form.querySelector('input[name="id"]').value;
+
+		        // Controllerへ送信
+		        fetch("/items/updateQuantity", {
+
+		            method: "POST",
+
+		            headers: {
+		                "Content-Type": "application/x-www-form-urlencoded"
+		            },
+
+		            body:
+		                "id=" + encodeURIComponent(id) +
+		                "&quantity=" + encodeURIComponent(input.value)
+
+		        });
+
+			});
+
+		});
+	</script>
+
+
+
 
 
 </body>

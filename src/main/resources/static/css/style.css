@@ -73,7 +73,10 @@ input[type="checkbox"] {
     width: 28px;
     height: 28px;
 }
-
+.quantity-input {
+    width: 50px;
+	text-align: center;
+}
 button {
 	font-size: 40px;
 	padding: 4px 6px;
@@ -116,6 +119,13 @@ a:visited {
 	border-radius: 12px;
 	width: 80%;
 	max-width: 320px;
+}
+
+.quantity-form {
+	display: flex;
+	align-items: center;
+    gap: 4px;
+	justify-content: center;
 }
 
 

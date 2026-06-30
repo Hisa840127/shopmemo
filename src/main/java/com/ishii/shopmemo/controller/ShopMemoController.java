@@ -75,6 +75,23 @@ public class ShopMemoController {
 		// 4) 画面を更新
 		return "redirect:/list";
 	}
+	
+	// 数量更新ボタン
+	@PostMapping("/items/updateQuantity")
+	public String updateQuantity(
+	        @RequestParam Long id,
+	        @RequestParam Integer quantity) {
+
+	    Optional<Item> opt = itemRepository.findById(id);
+
+	    if (opt.isPresent()) {
+	        Item item = opt.get();
+	        item.setQuantity(quantity);
+	        itemRepository.save(item);
+	    }
+
+	    return "redirect:/list";
+	}
 
 	// 削除ボタン
 	@PostMapping("/delete")
@@ -86,6 +103,9 @@ public class ShopMemoController {
 	// 新規追加
 	@PostMapping("/items")
 	public String addItem(Item item) {
+		 if (item.getQuantity() == null) {
+		        item.setQuantity(1);
+		    }
 		itemRepository.save(item);
 		return "redirect:/list";
 	}
@@ -112,8 +132,13 @@ public class ShopMemoController {
 	// 再投入編集画面→再投入
 	@PostMapping("/readd")
 	public String readd(Item item) {
+		if (item.getQuantity() == null) {
+	        item.setQuantity(1);
+	    }
 		itemRepository.save(item);
 		return "redirect:/list";
 	}
 
 }
+
+/*デプロイ動作確認用コメント6/26*/

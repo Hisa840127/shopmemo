@@ -32,6 +32,10 @@ public class Item {
     public String getUnit() { return unit; }
     public String getShopName() { return shopName; }
     public String getMemo() { return memo; }
+    
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
 }
 
 /*

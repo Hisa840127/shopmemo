@@ -47,6 +47,23 @@ public class ShopMemoController {
 		return "list";
 	}
 
+	// 数量更新ボタン
+	@PostMapping("/items/updateQuantity")
+	public String updateQuantity(
+	        @RequestParam Long id,
+	        @RequestParam Integer quantity) {
+
+	    Optional<Item> opt = itemRepository.findById(id);
+
+	    if (opt.isPresent()) {
+	        Item item = opt.get();
+	        item.setQuantity(quantity);
+	        itemRepository.save(item);
+	    }
+
+	    return "redirect:/list";
+	}
+
 	// 購入ボタン
 	@Transactional
 	@PostMapping("/purchase")
@@ -76,24 +93,36 @@ public class ShopMemoController {
 		return "redirect:/list";
 	}
 	
-	// 数量更新ボタン
-	@PostMapping("/items/updateQuantity")
-	public String updateQuantity(
-	        @RequestParam Long id,
-	        @RequestParam Integer quantity) {
+	// まとめて購入処理ボタン
+	@PostMapping("/purchase/bulk")
+	public String bulkPurchase(@RequestParam List<Long> ids) {
 
-	    Optional<Item> opt = itemRepository.findById(id);
+	    for (Long id : ids) {
 
-	    if (opt.isPresent()) {
-	        Item item = opt.get();
-	        item.setQuantity(quantity);
-	        itemRepository.save(item);
+	        Item item = itemRepository.findById(id).orElseThrow();
+
+	    		HistoryItem historyItem = new HistoryItem(
+					LocalDate.now(),
+					item.getName(),
+					item.getQuantity(),
+					item.getUnit(),
+					item.getShopName());
+
+	        historyItem.setPurchaseDate(LocalDate.now());
+	        historyItem.setName(item.getName());
+	        historyItem.setQuantity(item.getQuantity());
+	        historyItem.setUnit(item.getUnit());
+	        historyItem.setShopName(item.getShopName());
+
+	        historyItemRepository.save(historyItem);
+
+	        itemRepository.delete(item);
 	    }
 
 	    return "redirect:/list";
 	}
-
-	// 削除ボタン
+	
+	// 削除処理
 	@PostMapping("/delete")
 	public String deleteItem(@RequestParam Long id) {
 		itemRepository.deleteById(id);

@@ -1,0 +1,124 @@
+// Controllerへ送信
+fetch("/items/updateQuantity", {
+
+    method: "POST",
+
+    headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+    },
+
+    body:
+        "id=" + encodeURIComponent(id) +
+        "&quantity=" + encodeURIComponent(input.value)
+
+});
+処理の流れ
+①
+
+fetch()
+
+↓
+
+JavaScriptから
+Controllerへリクエストを送る。
+
+今までの
+
+<form method="post">
+
+の代わり。
+
+--------------------------------------------
+
+②
+
+"/items/updateQuantity"
+
+↓
+
+送信先のURL。
+
+Controllerの
+
+@PostMapping("/items/updateQuantity")
+
+が実行される。
+
+--------------------------------------------
+
+③
+
+method: "POST"
+
+↓
+
+POSTメソッドで送信する。
+
+<form method="post">
+
+と同じ意味。
+
+--------------------------------------------
+
+④
+
+headers
+
+↓
+
+送信データの形式を指定する。
+
+application/x-www-form-urlencoded
+
+は、
+
+通常のHTMLフォームと同じ形式。
+
+--------------------------------------------
+
+⑤
+
+body
+
+↓
+
+Controllerへ送るデータ。
+
+id=1&quantity=10
+
+のような文字列を作って送信している。
+
+encodeURIComponent()
+
+は、
+
+特殊文字を安全に送信できる形へ変換するためのメソッド。
+
+今回は数値なので意識しなくてもよいが、
+
+日本語や記号を送る場合にも安全に送信できる。
+最低限覚えておけばいいこと
+fetch()
+
+↓
+
+JavaScript版の<form>
+
+URL
+
+↓
+
+どのControllerを呼ぶか
+
+method
+
+↓
+
+GETかPOSTか
+
+body
+
+↓
+
+Controllerへ渡す値
+

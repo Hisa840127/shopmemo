@@ -17,7 +17,10 @@
 		<!-- 現在の買う物リスト -->
 		<section class="section" id="current-list">
 			<h2>現在の買う物リスト</h2>
-
+			<form id="bulk-purchase-form"
+			      th:action="@{/purchase/bulk}"
+			      method="post">
+			</form>
 			<table>
 				<thead>
 					<tr>
@@ -33,23 +36,31 @@
 				<tbody>
 					<tr th:each="item : ${items}">
 						<td>
-							<input type="checkbox" name="ids" th:value="${item.id}">
+							<input type="checkbox"
+								   name="ids" 
+								   th:value="${item.id}" 
+								   form="bulk-purchase-form">
 						</td>
 						<td th:text="${item.name}"></td>
 						<td>
 							<form class="quantity-form">
 								<input type="hidden" name="id" th:value="${item.id}">
 								<button type="button" class="minus-button">−</button>
-								<input class="quantity-input" type="number" name="quantity" th:value="${item.quantity}">
-								<button type="button" class="plus-button">+</button>
+								<input class="quantity-input" 
+									   type="number" 
+									   name="quantity" 
+									   th:value="${item.quantity}">
+								<button type="button"class="plus-button">+</button>
 							</form>
 						</td>
 						<td th:text="${item.unit}"></td>
 						<td th:text="${item.shopName}"></td>
 						<!-- メモ小窓表示用ボタン -->
 						<td>
-							<button type="button" class="memo-button"
-								th:if="${item.memo != null and !item.memo.isBlank()}" th:attr="data-memo=${item.memo}">
+							<button type="button"
+									class="memo-button"
+									th:if="${item.memo != null and !item.memo.isBlank()}" 
+									th:attr="data-memo=${item.memo}">
 								📝
 							</button>
 						</td>
@@ -73,7 +84,9 @@
 			</table>
 
 			<div class="actions">
-				<button>まとめて購入処理する</button>
+				<button type="submit" form="bulk-purchase-form">
+					まとめて購入処理する
+				</button>
 			</div>
 
 			<!-- 新規追加フォーム -->

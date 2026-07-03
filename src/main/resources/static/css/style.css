@@ -104,7 +104,7 @@ button {
 	cursor: pointer;
 }
 .bulk-purchase-button {
-	background-color: #121212;
+	background-color: #1212;
 	color: white;
 	}
 .delete-button {
@@ -113,9 +113,10 @@ button {
 	border: 1px solid #666;
 }
 .purchase-button {
-	background-color: #2b2b2b;
+	background-color: #3a3a3a;
 	color: white;
 	border: 1px solid #666;
+	border-radius: 4px;
 }
 
 small {

@@ -171,7 +171,7 @@ public class ShopMemoController {
 	@PostMapping("/history/delete")
 	public String deleteHistoryItem(@RequestParam Long id) {
 		historyItemRepository.deleteById(id);
-		return "redirect:/list";
+		return "redirect:/history";
 	}
 
 

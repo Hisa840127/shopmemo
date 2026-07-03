@@ -42,6 +42,11 @@
 								<input type="hidden" name="id" th:value="${item.id}">
 								<button type="submit">再投入</button>
 							</form>
+							<!-- 削除ボタン -->
+							<form th:action="@{/history/delete}" method="post">
+								<input type="hidden" name="id" th:value="${item.id}">
+								<button type="submit" class="delete-button">🗑</button>
+							</form>							
 						</td>
 					</tr>
 				</tbody>

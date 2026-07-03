@@ -66,7 +66,7 @@ public class ShopMemoController {
 
 	// 購入ボタン
 	@Transactional
-	@PostMapping("/purchase")
+	@PostMapping("/items/purchase")
 	public String purchase(@RequestParam Long id) {
 
 		// 1) 対象のItemを取得
@@ -94,7 +94,7 @@ public class ShopMemoController {
 	}
 	
 	// まとめて購入処理ボタン
-	@PostMapping("/purchase/bulk")
+	@PostMapping("/items/purchase/bulk")
 	public String bulkPurchase(@RequestParam List<Long> ids) {
 
 	    for (Long id : ids) {
@@ -123,7 +123,7 @@ public class ShopMemoController {
 	}
 	
 	// 削除処理
-	@PostMapping("/delete")
+	@PostMapping("/items/delete")
 	public String deleteItem(@RequestParam Long id) {
 		itemRepository.deleteById(id);
 		return "redirect:/list";
@@ -167,6 +167,13 @@ public class ShopMemoController {
 		itemRepository.save(item);
 		return "redirect:/list";
 	}
+	// 削除処理
+	@PostMapping("/history/delete")
+	public String deleteHistoryItem(@RequestParam Long id) {
+		historyItemRepository.deleteById(id);
+		return "redirect:/list";
+	}
+
 
 }
 

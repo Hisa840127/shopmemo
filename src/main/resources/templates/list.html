@@ -18,7 +18,7 @@
 		<section class="section" id="current-list">
 			<h2>現在の買う物リスト</h2>
 			<form id="bulk-purchase-form"
-			      th:action="@{/purchase/bulk}"
+			      th:action="@{/items/purchase/bulk}"
 			      method="post">
 			</form>
 			<table>
@@ -67,12 +67,12 @@
 
 						<td>
 							<!-- 購入ボタン -->
-							<form th:action="@{/purchase}" method="post">
+							<form th:action="@{/items/purchase}" method="post">
 								<input type="hidden" name="id" th:value="${item.id}">
-								<button type="submit">🛒</button>
+								<button type="submit" class="purchase-button">🛒</button>
 							</form>
 							<!-- 削除ボタン -->
-							<form th:action="@{/delete}" method="post">
+							<form th:action="@{/items/delete}" method="post">
 								<input type="hidden" name="id" th:value="${item.id}">
 								<button type="submit" class="delete-button">🗑</button>
 							</form>
@@ -83,7 +83,7 @@
 
 			</table>
 
-			<div class="actions">
+			<div class="bulk-purchase-button">
 				<button type="submit" form="bulk-purchase-form">
 					まとめて購入処理する
 				</button>

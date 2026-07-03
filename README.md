@@ -6,12 +6,15 @@
 
 ## URL
 
-- アプリURL: 
-- GitHub: 
+- アプリURL: https://shopmemo-24qi.onrender.com/
+- GitHub: https://github.com/Hisa840127/shopmemo
 
 ## 使用技術
 
 - Java 21
+- HTML
+- CSS
+- JavaScript
 - Spring Boot
 - Thymeleaf
 - PostgreSQL（本番環境）
@@ -33,7 +36,8 @@
 
 ## 工夫した点
 
-- スマートフォンで使いやすいよう、ボタンを大きめに配置しました。
+- スマートフォンで使いやすいよう、ボタンを大きめに配置し、
+  ＋・－ボタンと直接入力の両方で数量を変更できるようにしました。
 - 店内でメモをすぐ確認できるよう、メモはモーダル表示にしました。
 - ローカル環境ではH2、本番環境ではPostgreSQLを使うようにSpring Profilesで分けました。
 - Renderへデプロイし、Web上で動作確認できるようにしました。

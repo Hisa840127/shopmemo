@@ -9,7 +9,14 @@ body {
 	font-size: 40px;
 }
 .index-page {
-	font-size: 60px;
+	font-size: 30px;
+}
+.index-page h1 {
+	font-size: 40px;
+}
+.index-page ul {
+    list-style: none;
+    padding-left: 0;
 }
 
 header {

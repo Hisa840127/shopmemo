@@ -6,6 +6,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class HistoryItem {
@@ -19,7 +21,11 @@ public class HistoryItem {
 	private Integer quantity;
 	private String unit;
 	private String shopName;
-
+	
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
+	
 	protected HistoryItem() {
 	} // <補足4>
 
@@ -34,6 +40,10 @@ public class HistoryItem {
 
 	public Long getId() {
 		return id;
+	}
+	
+	public User getUser() {
+	    return user;
 	}
 
 	public LocalDate getPurchaseDate() {
@@ -78,5 +88,9 @@ public class HistoryItem {
 
 	public void setShopName(String shopName) {
 		this.shopName = shopName;
+	}
+	
+	public void setUser(User user) {
+	    this.user = user;
 	}
 }

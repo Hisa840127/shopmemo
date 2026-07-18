@@ -13,8 +13,7 @@
 ## 使用技術
 
 - Java 21
-- HTML
-- CSS
+- HTML/CSS
 - JavaScript
 - Spring Boot
 - Thymeleaf

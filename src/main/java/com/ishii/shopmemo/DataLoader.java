@@ -1,5 +1,6 @@
 package com.ishii.shopmemo;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +18,8 @@ public class DataLoader {
 	CommandLineRunner loadData(
 	        ItemRepository itemRepository,
 	        UserRepository userRepository,
-	        PasswordEncoder passwordEncoder) {
+	        PasswordEncoder passwordEncoder,
+	        @Value("${app.ishii-password}") String ishiiPassword) {
 
 	    return args -> {
 
@@ -31,9 +33,15 @@ public class DataLoader {
 	                ));
 
 	        User ishii = userRepository.findByUsername("ishii")
-	        			.orElseThrow();
+	        .orElseGet(() -> userRepository.save(
+	                new User(
+	                        "ishii",
+	                        passwordEncoder.encode(ishiiPassword),
+	                        "USER"
+	                )
+	        ));
 	        
-	        ishii.setPassword(passwordEncoder.encode("Hisa840127"));
+	        ishii.setPassword(passwordEncoder.encode(ishiiPassword));
 	        userRepository.save(ishii);
 	        
 	        if (itemRepository.count() == 0) {

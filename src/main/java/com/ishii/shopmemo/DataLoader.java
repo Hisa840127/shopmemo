@@ -30,14 +30,11 @@ public class DataLoader {
 	                        )
 	                ));
 
-	        userRepository.findByUsername("tanaka")
-	        .orElseGet(() -> userRepository.save(
-	        		new User(
-	        				"tanaka",
-	        				passwordEncoder.encode("5678"),
-	        				"USER"
-	        				)
-	        		));
+	        User ishii = userRepository.findByUsername("ishii")
+	        			.orElseThrow();
+	        
+	        ishii.setPassword(passwordEncoder.encode("Hisa840127"));
+	        userRepository.save(ishii);
 	        
 	        if (itemRepository.count() == 0) {
 

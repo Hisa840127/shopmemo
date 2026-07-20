@@ -147,6 +147,28 @@
 
 		const csrfHeader =
 		    document.querySelector('meta[name="_csrf_header"]').getAttribute("content");
+
+			function updateQuantity(form, input) {
+				
+				// hiddenのid取得
+			    const id = form.querySelector('input[name="id"]').value;
+			
+				// Controllerへの送信
+			    fetch("/items/updateQuantity", {
+
+			        method: "POST",
+
+			        headers: {
+			            "Content-Type": "application/x-www-form-urlencoded",
+			            [csrfHeader]: csrfToken
+			        },
+
+			        body:
+			            "id=" + encodeURIComponent(id) +
+			            "&quantity=" + encodeURIComponent(input.value),
+
+			    });
+			}		
 		// +ボタン操作用
 		const plusButtons = document.querySelectorAll(".plus-button");
 
@@ -160,24 +182,7 @@
 		        // 数量を+1
 		        input.value = Number(input.value) + 1;
 
-		        // hiddenのid取得
-		        const id = form.querySelector('input[name="id"]').value;
-
-		        // Controllerへ送信
-		        fetch("/items/updateQuantity", {
-
-		            method: "POST",
-
-		            headers: {
-		                "Content-Type": "application/x-www-form-urlencoded",
-						[csrfHeader]: csrfToken
-		            },
-
-		            body:
-		                "id=" + encodeURIComponent(id) +
-		                "&quantity=" + encodeURIComponent(input.value),
-
-		        });
+				updateQuantity(form, input);
 
 		    });
 
@@ -197,26 +202,23 @@
 				           input.value = Number(input.value) - 1;
 				       }
 				
-		        // hiddenのid取得
-		        const id = form.querySelector('input[name="id"]').value;
-
-		        // Controllerへ送信
-		        fetch("/items/updateQuantity", {
-
-		            method: "POST",
-
-		            headers: {
-		                "Content-Type": "application/x-www-form-urlencoded",
-						[csrfHeader]: csrfToken
-		            },
-
-		            body:
-		                "id=" + encodeURIComponent(id) +
-		                "&quantity=" + encodeURIComponent(input.value),
-
-		        });
+				updateQuantity(form, input);
 
 			});
+
+		});
+		// 数量直接操作
+		const quantityInputs = document.querySelectorAll(".quantity-input");
+
+		quantityInputs.forEach(input => {
+
+		    input.addEventListener("change", () => {
+
+		        const form = input.closest("form");
+
+		        updateQuantity(form, input);
+
+		    });
 
 		});
 	</script>

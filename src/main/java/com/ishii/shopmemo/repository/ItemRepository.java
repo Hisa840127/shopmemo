@@ -8,4 +8,5 @@ import com.ishii.shopmemo.model.Item;
 import com.ishii.shopmemo.model.User;
 
 public interface ItemRepository extends JpaRepository<Item, Long> {
-	List<Item> findByUser(User user);}
+	List<Item> findByUser(User user);
+	long countByUser(User user);}

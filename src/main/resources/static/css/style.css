@@ -8,16 +8,6 @@ body {
 	color: rgb(255, 255, 255);
 	font-size: 40px;
 }
-.index-page {
-	font-size: 30px;
-}
-.index-page h1 {
-	font-size: 40px;
-}
-.index-page ul {
-    list-style: none;
-    padding-left: 0;
-}
 
 header {
 	margin-bottom: 24px;
@@ -84,6 +74,41 @@ input {
 input[type="checkbox"] {
 	width: 40px;
 	height: 40px;
+}
+.history-date {
+    font-size: 1.6rem;
+}
+
+.history-unit {
+    font-size: 1.6rem;
+}
+
+.history-shop {
+    font-size: 1.6rem;
+}
+
+.history-name {
+    font-size: 2.2rem;
+}
+
+.history-quantity {
+    font-size: 2.2rem;
+}
+
+.item-unit {
+    font-size: 1.6rem;
+}
+
+.item-shop {
+    font-size: 1.6rem;
+}
+
+.item-name {
+    font-size: 2.2rem;
+}
+
+.item-quantity {
+    font-size: 2.2rem;
 }
 
 .login-page {

@@ -34,12 +34,11 @@ public class ShopMemoController {
 		this.userRepository = userRepository;
 	}
 
-	// トップ画面（メニュー）
 	@GetMapping("/")
-	public String showIndex() {
-		return "index"; // index.html
+	public String redirectToList() {
+	    return "redirect:/list";
 	}
-
+	
 	// 買うものリスト画面 
 	@GetMapping("/list")
 	public String showList(Model model,

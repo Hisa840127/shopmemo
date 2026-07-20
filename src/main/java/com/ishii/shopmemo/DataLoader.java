@@ -32,17 +32,17 @@ public class DataLoader {
 	                        )
 	                ));
 
-	       userRepository.findByUsername("ishii")
-	        .orElseGet(() -> userRepository.save(
-	                new User(
-	                        "ishii",
-	                        passwordEncoder.encode(ishiiPassword),
-	                        "USER"
-	                )
-	        ));
+	        User ishii = userRepository.findByUsername("ishii")
+	                .orElseThrow();
+	        
+	        System.out.println("更新処理実行");
+	        System.out.println(ishiiPassword);
+	        
+	        ishii.setPassword(passwordEncoder.encode(ishiiPassword));
+	        userRepository.save(ishii);
 	        
 	        
-	        if (itemRepository.count() == 0) {
+	        if (itemRepository.countByUser(admin) == 0) {
 
 	            Item egg = new Item(
 	                    "卵", 10, "個",

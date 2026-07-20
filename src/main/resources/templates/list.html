@@ -11,7 +11,7 @@
 
 <body>
 	<header>
-		<h1>買う物リスト</h1>
+		<h1>ShopMemo</h1>
 	</header>
 
 	<main>
@@ -43,10 +43,13 @@
 								   th:value="${item.id}" 
 								   form="bulk-purchase-form">
 						</td>
-						<td th:text="${item.name}"></td>
+						<td class="item-name" 
+							th:text="${item.name}"></td>
 						<td>
 							<form class="quantity-form">
-								<input type="hidden" name="id" th:value="${item.id}">
+								<input type="hidden" 
+									name="id" 
+									th:value="${item.id}">
 								<button type="button" class="minus-button">−</button>
 								<input class="quantity-input" 
 									   type="number" 
@@ -55,8 +58,10 @@
 								<button type="button"class="plus-button">+</button>
 							</form>
 						</td>
-						<td th:text="${item.unit}"></td>
-						<td th:text="${item.shopName}"></td>
+						<td class="item-unit"
+							th:text="${item.unit}"></td>
+						<td class="item-shop" 
+							th:text="${item.shopName}"></td>
 						<!-- メモ小窓表示用ボタン -->
 						<td>
 							<button type="button"
@@ -104,7 +109,6 @@
 			    <button type="submit">ログアウト</button>
 			</form>
 			<nav class="actions">
-				<a href="/">トップへ戻る</a>
 				<a href="/history">購入履歴を見る</a>
 			</nav>
 		</section>

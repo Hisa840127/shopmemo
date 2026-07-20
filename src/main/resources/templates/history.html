@@ -9,7 +9,7 @@
 
 <body>
 	<header>
-		<h1>購入履歴</h1>
+		<h1>ShopMemo</h1>
 	</header>
 	<main>
 		<!-- 購入履歴リスト -->
@@ -31,11 +31,11 @@
 				<tbody>
 					<!--一覧表示（th each, th text）Tymeleafフォルダ参照-->
 					<tr th:each="item : ${historyItems}">
-						<td th:text="${item.purchaseDate}"></td>
-						<td th:text="${item.name}"></td>
-						<td th:text="${item.quantity}"></td>
-						<td th:text="${item.unit}"></td>
-						<td th:text="${item.shopName}"></td>
+						<td class="history-date" th:text="${item.purchaseDate}"></td>
+						<td class="history-name" th:text="${item.name}"></td>
+						<td class="history-quantity" th:text="${item.quantity}"></td>
+						<td class="history-unit" th:text="${item.unit}"></td>
+						<td class="history-shop" th:text="${item.shopName}"></td>
 						<td>
 							<!--再投入ボタン-->
 							<form th:action="@{/readd/edit}" method="get">
@@ -52,7 +52,6 @@
 				</tbody>
 			</table>
 			<nav class="actions">
-				<a href="/">トップへ戻る</a>
 				<a href="/list">買う物リストを見る</a>
 			</nav>
 		</section>

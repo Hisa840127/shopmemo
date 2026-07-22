@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import jakarta.transaction.Transactional;
 
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -52,8 +53,46 @@ public class ShopMemoController {
 	    List<Item> items = itemRepository.findByUser(user);
 
 	    model.addAttribute("items", items);
+	    model.addAttribute("username", username);
 
 	    return "list";
+	}
+	
+	@PostMapping("/admin/restoreDemoData")
+	public String restoreDemoData(Authentication authentication) {
+
+	    if (!"admin".equals(authentication.getName())) {
+	        throw new AccessDeniedException("adminのみ実行できます");
+	    }
+
+	    User admin = userRepository.findByUsername("admin")
+	            .orElseThrow();
+
+	    if (itemRepository.countByUser(admin) == 0) {
+
+	        Item egg = new Item(
+	                "卵",
+	                10,
+	                "個",
+	                "ヨークフーズ",
+	                "残り少ない気がする"
+	        );
+	        egg.setUser(admin);
+
+	        Item milk = new Item(
+	                "牛乳",
+	                2,
+	                "本",
+	                "西友",
+	                "朝食用"
+	        );
+	        milk.setUser(admin);
+
+	        itemRepository.save(egg);
+	        itemRepository.save(milk);
+	    }
+
+	    return "redirect:/list";
 	}
 
 	// 数量更新ボタン
@@ -123,12 +162,18 @@ public class ShopMemoController {
 	
 	// まとめて購入処理ボタン
 	@PostMapping("/items/purchase/bulk")
-	public String bulkPurchase(@RequestParam List<Long> ids,
+	public String bulkPurchase(@RequestParam(required = false) List<Long> ids,
 			Authentication authentication	) {
+		
+		
 		String username = authentication.getName();
 
 	    User user = userRepository.findByUsername(username)
 	            .orElseThrow();
+	    
+	    if (ids == null || ids.isEmpty()) {
+	        return "redirect:/list";
+	    }
 	    
 	    for (Long id : ids) {
 
@@ -180,7 +225,11 @@ public class ShopMemoController {
 	// 新規追加
 	@PostMapping("/items")
 	public String addItem(Item item, Authentication authentication) {
-
+		
+		if (item.getName().isBlank()) {
+		    return "redirect:/list";
+		}
+		
 	    if (item.getQuantity() == null) {
 	        item.setQuantity(1);
 	    }
@@ -212,7 +261,7 @@ public class ShopMemoController {
 	            historyItemRepository.findByUser(user);
 
 	    model.addAttribute("historyItems", historyItems);
-
+	    model.addAttribute("username", username);
 	    return "history";
 	}
 

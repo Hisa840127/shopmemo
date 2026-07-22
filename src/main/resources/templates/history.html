@@ -10,6 +10,15 @@
 <body>
 	<header>
 		<h1>ShopMemo</h1>
+		
+		<div class="user-info">
+			 <span th:text="${username}"></span>
+
+			 <form th:action="@{/logout}" method="post">
+			        <button type="submit">ログアウト</button>
+			 </form>
+		 </div>
+		
 	</header>
 	<main>
 		<!-- 購入履歴リスト -->

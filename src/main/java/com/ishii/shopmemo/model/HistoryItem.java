@@ -16,7 +16,7 @@ public class HistoryItem {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private LocalDate purchaseDate; // <補足5>
+	private LocalDate purchaseDate; 
 	private String name;
 	private Integer quantity;
 	private String unit;
@@ -27,7 +27,7 @@ public class HistoryItem {
 	private User user;
 	
 	protected HistoryItem() {
-	} // <補足4>
+	} 
 
 	public HistoryItem(LocalDate purchaseDate, String name,
 			Integer quantity, String unit, String shopName) {

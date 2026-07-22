@@ -10,8 +10,13 @@ body {
 }
 
 header {
-	margin-bottom: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 24px;
 }
+
+
 
 h1 {
 	font-size: 3.0rem;
@@ -75,6 +80,13 @@ input[type="checkbox"] {
 	width: 40px;
 	height: 40px;
 }
+
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
 .history-date {
     font-size: 1.6rem;
 }
@@ -111,6 +123,21 @@ input[type="checkbox"] {
     font-size: 2.2rem;
 }
 
+.list-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.list-heading h2 {
+    margin: 0;
+}
+
+.list-heading form {
+    margin: 12px 0 0;
+}
+
 .login-page {
 	font-size: 20px;
 }
@@ -144,6 +171,12 @@ input[type="checkbox"] {
 	background-color: #2b2b2b;
 	color: white;
 	border: 1px solid #666;
+}
+.user-info {
+	font-size: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .plus-button,

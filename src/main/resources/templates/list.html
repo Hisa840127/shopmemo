@@ -11,18 +11,35 @@
 
 <body>
 	<header>
-		<h1>ShopMemo</h1>
+	    <h1>ShopMemo</h1>
+
+	    <div class="user-info">
+	        <span th:text="${username}"></span>
+
+	        <form th:action="@{/logout}" method="post">
+	            <button type="submit">ログアウト</button>
+	        </form>
+	    </div>
 	</header>
 
 	<main>
-
+		
 		<!-- 現在の買う物リスト -->
 		<section class="section" id="current-list">
-			<h2>現在の買う物リスト</h2>
+			<div class="list-heading">
+			    <h2>現在の買う物リスト</h2>
+
+			    <form th:if="${username == 'admin' and #lists.isEmpty(items)}"
+			          th:action="@{/admin/restoreDemoData}"
+			          method="post">
+			        <button type="submit">デモデータを復元</button>
+			    </form>
+			</div>
 			<form id="bulk-purchase-form"
 			      th:action="@{/items/purchase/bulk}"
 			      method="post">
 			</form>
+			
 			<table>
 				<thead>
 					<tr>
@@ -90,6 +107,7 @@
 
 			</table>
 
+
 			<div class="bulk-purchase-button">
 				<button type="submit" form="bulk-purchase-form">
 					まとめて購入処理する
@@ -105,9 +123,7 @@
 			    <input type="text" name="memo" placeholder="メモ">
 			    <button type="submit">追加</button>
 			</form>
-			<form th:action="@{/logout}" method="post">
-			    <button type="submit">ログアウト</button>
-			</form>
+			
 			<nav class="actions">
 				<a href="/history">購入履歴を見る</a>
 			</nav>

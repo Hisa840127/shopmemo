@@ -35,9 +35,6 @@ public class DataLoader {
 	        User ishii = userRepository.findByUsername("ishii")
 	                .orElseThrow();
 	        
-	        System.out.println("更新処理実行");
-	        System.out.println(ishiiPassword);
-	        
 	        ishii.setPassword(passwordEncoder.encode(ishiiPassword));
 	        userRepository.save(ishii);
 	        
